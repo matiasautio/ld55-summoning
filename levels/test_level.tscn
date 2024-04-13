@@ -15,4 +15,25 @@ texture = ExtResource("1_34hbh")
 position = Vector2(334, 264)
 
 [node name="Human2" parent="." instance=ExtResource("2_wrmqw")]
-position = Vector2(585, 398)
+position = Vector2(784, 289)
+
+[node name="Human3" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(618, 470)
+
+[node name="Human4" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(425, 236)
+
+[node name="Human5" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(1003, 197)
+
+[node name="Human6" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(155, 496)
+
+[node name="Human7" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(597, 50)
+
+[node name="Human8" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(318, 31)
+
+[node name="Human9" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(711, 183)
