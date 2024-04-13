@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=3 uid="uid://c72gv5k3ansqg"]
+
+[ext_resource type="Script" path="res://ui/console.gd" id="1_uvouq"]
+
+[node name="Console" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uvouq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -93.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.12549, 0.137255, 0.196078, 1)
+
+[node name="Message" type="RichTextLabel" parent="CanvasLayer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -77.0
+offset_right = -53.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/default_color = Color(1, 0.447059, 0.54902, 1)
+theme_override_font_sizes/normal_font_size = 25
+scroll_following = true

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://x7pch5eqnnqv"]
+
+[ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
+[ext_resource type="Texture2D" uid="uid://bq71rjmtqixub" path="res://art/human._temp.png" id="2_qviat"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qfw4s"]
+size = Vector2(48, 46)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xmw3b"]
+radius = 270.007
+
+[node name="Human" type="Area2D" groups=["human"]]
+monitorable = false
+script = ExtResource("1_wbjps")
+type = "???"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_qviat")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qfw4s")
+
+[node name="Vision" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_xmw3b")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]

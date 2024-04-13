@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://e4nhl08v1nco"]
+
+[ext_resource type="Texture2D" uid="uid://bjak21iq03kak" path="res://art/map_temp.jpeg" id="1_34hbh"]
+[ext_resource type="PackedScene" uid="uid://x7pch5eqnnqv" path="res://human/human.tscn" id="2_wrmqw"]
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = -222.0
+offset_right = 1294.0
+offset_bottom = 1072.0
+texture = ExtResource("1_34hbh")
+
+[node name="Human" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(334, 264)
+
+[node name="Human2" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(585, 398)
