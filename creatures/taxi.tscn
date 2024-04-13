@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://gkg6imyesjnw"]
+
+[ext_resource type="Script" path="res://creatures/taxi.gd" id="1_tcwuf"]
+[ext_resource type="Texture2D" uid="uid://chog0873k7yc5" path="res://art/taxi.png" id="2_bbypt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mfjv1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bbypt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mmk8n"]
+size = Vector2(160, 86)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwxew"]
+size = Vector2(51.5, 44)
+
+[node name="Taxi" type="Area2D"]
+y_sort_enabled = true
+script = ExtResource("1_tcwuf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_mfjv1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mmk8n")
+
+[node name="RidingPos" type="Node2D" parent="."]
+position = Vector2(-15, -4)
+
+[node name="PassengerSeat" type="Area2D" parent="."]
+monitorable = false
+
+[node name="PassengerSeat" type="CollisionShape2D" parent="PassengerSeat"]
+position = Vector2(-15.25, -4)
+shape = SubResource("RectangleShape2D_rwxew")
+
+[connection signal="area_exited" from="PassengerSeat" to="." method="_on_passenger_seat_area_exited"]

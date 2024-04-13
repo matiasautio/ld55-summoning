@@ -1,15 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://e4nhl08v1nco"]
+[gd_scene load_steps=5 format=3 uid="uid://e4nhl08v1nco"]
 
 [ext_resource type="Texture2D" uid="uid://bjak21iq03kak" path="res://art/map_temp.jpeg" id="1_34hbh"]
 [ext_resource type="PackedScene" uid="uid://x7pch5eqnnqv" path="res://human/human.tscn" id="2_wrmqw"]
+[ext_resource type="PackedScene" uid="uid://dl8sfgp4mnyo2" path="res://creatures/wolf.tscn" id="3_aq4in"]
+[ext_resource type="PackedScene" uid="uid://gkg6imyesjnw" path="res://creatures/taxi.tscn" id="4_rdkwh"]
 
 [node name="TestLevel" type="Node2D"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 offset_top = -222.0
 offset_right = 1294.0
 offset_bottom = 1072.0
 texture = ExtResource("1_34hbh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 647.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.662745, 0.294118, 1)
+
+[node name="MovementArea" type="ColorRect" parent="."]
+offset_left = 636.0
+offset_top = 42.0
+offset_right = 1127.0
+offset_bottom = 408.0
+color = Color(1, 1, 1, 0)
+
+[node name="Wolf" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("3_aq4in")]
+position = Vector2(869, 185)
+movement_boudnaries = NodePath("../MovementArea")
+
+[node name="Taxi" parent="." instance=ExtResource("4_rdkwh")]
+position = Vector2(544, 326)
 
 [node name="Human" parent="." instance=ExtResource("2_wrmqw")]
 position = Vector2(334, 264)

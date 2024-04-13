@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl8sfgp4mnyo2"]
+
+[ext_resource type="Texture2D" uid="uid://c4k53hf62367q" path="res://art/wolf.png" id="1_86km8"]
+[ext_resource type="Script" path="res://creatures/wolf.gd" id="1_c1xy4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a6o6n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_86km8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5ewf"]
+size = Vector2(96, 60)
+
+[node name="Wolf" type="Area2D"]
+y_sort_enabled = true
+script = ExtResource("1_c1xy4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_a6o6n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j5ewf")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

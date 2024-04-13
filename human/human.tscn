@@ -1,7 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=7 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
 [ext_resource type="Texture2D" uid="uid://bq71rjmtqixub" path="res://art/human._temp.png" id="2_qviat"]
+[ext_resource type="Texture2D" uid="uid://c8ybgmpt4tibb" path="res://art/ghost.png" id="3_y3bsg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cc41q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_y3bsg")
+}],
+"loop": true,
+"name": &"ghost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qviat")
+}],
+"loop": true,
+"name": &"human",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qfw4s"]
 size = Vector2(48, 46)
@@ -10,17 +30,19 @@ size = Vector2(48, 46)
 radius = 79.0759
 
 [node name="Human" type="Area2D" groups=["human"]]
-monitorable = false
 script = ExtResource("1_wbjps")
-type = "???"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_qviat")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.312497, 0.361418)
+scale = Vector2(0.232143, 0.232143)
+sprite_frames = SubResource("SpriteFrames_cc41q")
+animation = &"human"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qfw4s")
 
 [node name="Vision" type="Area2D" parent="."]
+y_sort_enabled = true
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
