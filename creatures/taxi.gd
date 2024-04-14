@@ -5,6 +5,7 @@ var size = Vector2(0,0)
 
 var new_pos = Vector2.ZERO
 var movement = 1000
+var can_move = true
 var should_move = false
 var passenger = null
 var screen_size
@@ -17,31 +18,35 @@ func _ready():
 
 func die():
 	pass
-	#Console.add_message(type + " is getting chewed")
 
 
 func _physics_process(delta):
-	if should_move:
+	if should_move and can_move:
+		passenger.position = $RidingPos.global_position
 		position = position.lerp(new_pos, delta * 2)
 		if position.distance_to(new_pos) < size.x / 2:
-			#print("reached taxi goal")
-			passenger.reparent(get_parent())
-			passenger.can_move = true
 			should_move = false
+			passenger.can_move = true
+			passenger.current_action = null
+			passenger.find_new_pos()
+			passenger = null
 	position = position.clamp(Vector2(313,64), screen_size)
+
+
+func _on_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton and event.button_mask == 0:
+		can_move = false
+		Console.show_popup(self)
 
 
 func move(_passenger):
 	if !should_move:
 		passenger = _passenger
 		passenger.can_move = false
-		passenger.reparent(self)
-		passenger.position = Vector2.ZERO#$RidingPos.position
-		print(passenger.position, $RidingPos.position, position)
+		passenger.position = $RidingPos.global_position
 		movement = movement * -1
 		new_pos = global_position + Vector2(movement, 0)
 		new_pos = new_pos.clamp(Vector2(313,64), screen_size)
-		#print(new_pos)
 		should_move = true
 
 
@@ -52,3 +57,15 @@ func _on_passenger_seat_area_exited(area):
 
 func specific_goal():
 	return $RidingPos.global_position
+
+
+func change_type(new_type):
+	#print("my new type is ", new_type)
+	if monitorable:
+		monitorable = false
+	type = new_type
+	monitorable = true
+
+
+func enable_move():
+	can_move = true

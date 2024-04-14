@@ -22,6 +22,7 @@ offset_right = 1152.0
 offset_bottom = 647.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(1, 0.662745, 0.294118, 1)
 
 [node name="MovementArea" type="ColorRect" parent="."]
@@ -29,6 +30,7 @@ offset_left = 636.0
 offset_top = 42.0
 offset_right = 1127.0
 offset_bottom = 408.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Wolf" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("3_aq4in")]

@@ -7,6 +7,7 @@ var movement_area
 @export var type = "wolf"
 var size = Vector2(0,0)
 
+var can_move = true
 var idle_pos = Vector2.ZERO
 
 
@@ -18,13 +19,21 @@ func _ready():
 
 
 func _physics_process(delta):
-	position = position.lerp(idle_pos, delta * 2)
-	if position.distance_to(idle_pos) < 1:
-		find_new_pos()
+	if can_move:
+		position = position.lerp(idle_pos, delta * 2)
+		if position.distance_to(idle_pos) < 1:
+			find_new_pos()
+
+
+func _on_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton and event.button_mask == 0:
+		can_move = false
+		Console.show_popup(self)
+
 
 func _on_area_entered(area):
 	if area.type != "ghost":
-		Console.add_message("wolf is eating " + area.type)
+		Console.add_message(type + " is eating " + area.type)
 		area.die()
 	#area.queue_free()
 
@@ -36,3 +45,15 @@ func find_new_pos():
 	#idle_pos = idle_pos.clamp(Vector2.ZERO, movement_area)
 	#start_pos = global_position
 	#print(idle_pos)
+
+
+func change_type(new_type):
+	#print("my new type is ", new_type)
+	if monitorable:
+		monitorable = false
+	type = new_type
+	monitorable = true
+
+
+func enable_move():
+	can_move = true

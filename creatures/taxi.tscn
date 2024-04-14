@@ -25,7 +25,7 @@ y_sort_enabled = true
 script = ExtResource("1_tcwuf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.35, 0.35)
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_mfjv1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -41,4 +41,5 @@ monitorable = false
 position = Vector2(-15.25, -4)
 shape = SubResource("RectangleShape2D_rwxew")
 
+[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="area_exited" from="PassengerSeat" to="." method="_on_passenger_seat_area_exited"]

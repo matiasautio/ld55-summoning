@@ -37,9 +37,10 @@ func _ready():
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture("human", 0).get_size() * $AnimatedSprite2D.scale)
 	#print(position)
 	screen_size = get_viewport_rect().size# - Vector2(313,0)# 93 + size.y)
-	print(screen_size)
+	#print(screen_size)
 	find_new_pos()
-	play_animation("human")
+	if state == 1:
+		play_animation("human")
 	#print(idle_pos)
 
 
@@ -48,17 +49,18 @@ func _physics_process(delta):
 	#t += delta * 0.4
 	if can_move:
 		if goal != null:
-				if !specific_goal:
-					position = position.lerp(goal.global_position * direction, delta * 2)
-					if position.distance_to(goal.global_position) < goal.size.x:
-						goal_reached()
-				else:
-					position = position.lerp(goal.specific_goal() * direction, delta * 2)
-					if position.distance_to(goal.specific_goal()) < 10:
-						goal_reached()
+				#if !specific_goal:
+				position = position.lerp(goal.global_position * direction, delta * 2)
+				if position.distance_to(goal.global_position) < goal.size.x:
+					goal_reached()
+				#else:
+					#position = position.lerp(goal.specific_goal() * direction, delta * 2)
+					#if position.distance_to(goal.specific_goal()) < 10:
+						#goal_reached()
 		if goal == null and current_action == null:
 			if $AnimatedSprite2D.animation != "human_walk":
-				play_animation("human_walk")
+				if state == 1:
+					play_animation("human_walk")
 			#t += delta * 2
 			position = position.lerp(idle_pos, delta * 2)
 			if position.distance_to(idle_pos) < 1:
@@ -99,16 +101,18 @@ func determine_action(action):
 		"taxi":
 			#print(current_action)
 			if !has_reached_goal:
-				specific_goal = true
+				#specific_goal = true
 				goal = action
 			else:
-				goal.move(self)
+				if goal. has_method("move"):
+					goal.move(self)
 				action_timer.start()
 				Console.add_message(type + " is riding a taxi")
 
 
 func goal_reached():
-	play_animation("human")
+	if state == 1:
+		play_animation("human")
 	has_reached_goal = true
 	specific_goal = false
 	determine_action(goal)
@@ -116,11 +120,11 @@ func goal_reached():
 
 
 func _on_input_event(viewport, event, shape_idx):
-	pass
 	#print(event)
-	#if event is InputEventMouseButton and event.button_mask == 0:
-		#get_tree().call_group("human", "change_type", "human")
-		#change_type("human")
+	if event is InputEventMouseButton and event.button_mask == 0:
+		print("human clicked")
+		can_move = false
+		Console.show_popup(self)
 
 
 func change_type(new_type):
@@ -131,9 +135,14 @@ func change_type(new_type):
 	monitorable = true
 
 
+func enable_move():
+	can_move = true
+
+
 func find_new_pos():
 	#t = 0
-	play_animation("human")
+	if state == 1:
+		play_animation("human")
 	var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 2
 	idle_pos = global_position + movement_area
 	idle_pos = idle_pos.clamp(Vector2(313,64), screen_size)
@@ -172,3 +181,7 @@ func play_animation(animation_name):
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "human_becomeghost":
 		play_animation("ghost")
+
+
+func _on_mouse_entered():
+	print("mouse entered")
