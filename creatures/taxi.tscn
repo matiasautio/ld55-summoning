@@ -25,7 +25,7 @@ y_sort_enabled = true
 script = ExtResource("1_tcwuf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_mfjv1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
