@@ -1,11 +1,7 @@
-extends Area2D
-
-@export var type = "taxi"
-var size = Vector2(0,0)
+extends Creature
 
 var new_pos = Vector2.ZERO
 var movement = 1000
-var can_move = true
 var should_move = false
 var passenger = null
 var screen_size
@@ -58,14 +54,3 @@ func _on_passenger_seat_area_exited(area):
 func specific_goal():
 	return $RidingPos.global_position
 
-
-func change_type(new_type):
-	#print("my new type is ", new_type)
-	if monitorable:
-		monitorable = false
-	type = new_type
-	monitorable = true
-
-
-func enable_move():
-	can_move = true

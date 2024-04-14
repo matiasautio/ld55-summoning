@@ -1,13 +1,9 @@
-extends Area2D
+extends Creature
 
 
 @export var movement_boudnaries : ColorRect
 var movement_area
 
-@export var type = "wolf"
-var size = Vector2(0,0)
-
-var can_move = true
 var idle_pos = Vector2.ZERO
 
 
@@ -45,15 +41,3 @@ func find_new_pos():
 	#idle_pos = idle_pos.clamp(Vector2.ZERO, movement_area)
 	#start_pos = global_position
 	#print(idle_pos)
-
-
-func change_type(new_type):
-	#print("my new type is ", new_type)
-	if monitorable:
-		monitorable = false
-	type = new_type
-	monitorable = true
-
-
-func enable_move():
-	can_move = true

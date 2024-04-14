@@ -28,6 +28,7 @@ size = Vector2(96, 60)
 [node name="Wolf" type="Area2D"]
 y_sort_enabled = true
 script = ExtResource("1_c1xy4")
+type = "wolf"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

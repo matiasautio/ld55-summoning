@@ -104,10 +104,20 @@ func determine_action(action):
 				#specific_goal = true
 				goal = action
 			else:
-				if goal. has_method("move"):
+				if goal.has_method("move"):
 					goal.move(self)
 				action_timer.start()
 				Console.add_message(type + " is riding a taxi")
+		"time machine":
+			if state == 2:
+				if !has_reached_goal:
+					goal = action
+				else:
+					action_timer.start()
+					Console.add_message(type + " is time traveling")
+			else:
+				print("i dont need to use the time machine")
+				_on_action_timeout()
 
 
 func goal_reached():
