@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfpnswx7fv61e"]
+
+[ext_resource type="Texture2D" uid="uid://bgs080beceqjs" path="res://art/fire_1.png" id="1_dfluj"]
+[ext_resource type="Texture2D" uid="uid://ela07q61us5k" path="res://art/fire_2.png" id="2_qbmnc"]
+[ext_resource type="Texture2D" uid="uid://bhsca6gsq6cak" path="res://art/fire_3.png" id="3_gq0mp"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fd3kg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dfluj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_qbmnc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gq0mp")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pui1e"]
+radius = 69.0
+height = 164.0
+
+[node name="Fire" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_fd3kg")
+animation = &"fire"
+frame = 2
+frame_progress = 0.20217
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_pui1e")
