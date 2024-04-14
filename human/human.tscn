@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=25 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
+[ext_resource type="Texture2D" uid="uid://bbpywgnae54tl" path="res://art/ghost_move_1.png" id="2_u8fnk"]
 [ext_resource type="Texture2D" uid="uid://den0wqecgktwm" path="res://art/human_1_idle_1.png" id="3_8p6wf"]
-[ext_resource type="Texture2D" uid="uid://c8ybgmpt4tibb" path="res://art/ghost.png" id="3_y3bsg"]
+[ext_resource type="Texture2D" uid="uid://d2bc6755fm24j" path="res://art/ghost_move_2.png" id="3_ycsq1"]
 [ext_resource type="Texture2D" uid="uid://6aykoyffxxnu" path="res://art/human_e_idle_2.png" id="4_cisnx"]
 [ext_resource type="Texture2D" uid="uid://rus8cdogd47n" path="res://art/human1_hit_1.png" id="5_4lgu2"]
 [ext_resource type="Texture2D" uid="uid://df34c5xe11s5w" path="res://art/human_becomeghost_1.png" id="5_4uoa7"]
@@ -17,12 +18,18 @@
 [ext_resource type="Texture2D" uid="uid://c44rs122eo6xn" path="res://art/human1_eat_1.png" id="9_l7cq7"]
 [ext_resource type="Texture2D" uid="uid://bkqjaw16mrm1" path="res://art/human1_eat_2.png" id="10_6cmsi"]
 [ext_resource type="Texture2D" uid="uid://c14arxh2piix5" path="res://art/human1_eat_3.png" id="11_03ywn"]
+[ext_resource type="Texture2D" uid="uid://de14wr4bb3xqf" path="res://art/wolf_1.png" id="19_2or47"]
+[ext_resource type="Texture2D" uid="uid://bdrjxqrvxa26j" path="res://art/wolf_2.png" id="20_gvhwe"]
+[ext_resource type="Texture2D" uid="uid://d13sqtcup2sf1" path="res://art/wolf_3.png" id="21_go23v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cc41q"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_y3bsg")
+"texture": ExtResource("2_u8fnk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ycsq1")
 }],
 "loop": true,
 "name": &"ghost",
@@ -102,6 +109,20 @@ animations = [{
 "loop": true,
 "name": &"human_walk",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_2or47")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_gvhwe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_go23v")
+}],
+"loop": true,
+"name": &"wolf_move",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qfw4s"]
@@ -117,8 +138,9 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"human_eat"
-frame_progress = 0.352723
+animation = &"wolf_move"
+frame = 1
+frame_progress = 0.943584
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qfw4s")
