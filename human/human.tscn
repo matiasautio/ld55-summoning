@@ -1,14 +1,18 @@
-[gd_scene load_steps=22 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=29 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
+[ext_resource type="Texture2D" uid="uid://cw1mc0dbabatv" path="res://art/egg.png" id="2_3itri"]
 [ext_resource type="Texture2D" uid="uid://bbpywgnae54tl" path="res://art/ghost_move_1.png" id="2_u8fnk"]
 [ext_resource type="Texture2D" uid="uid://den0wqecgktwm" path="res://art/human_1_idle_1.png" id="3_8p6wf"]
+[ext_resource type="Texture2D" uid="uid://d2co3ecw3vgnb" path="res://art/egg_hit_1.png" id="3_58fos"]
 [ext_resource type="Texture2D" uid="uid://d2bc6755fm24j" path="res://art/ghost_move_2.png" id="3_ycsq1"]
+[ext_resource type="Texture2D" uid="uid://bw22d27bfpvds" path="res://art/egg_hit_2.png" id="4_6106a"]
 [ext_resource type="Texture2D" uid="uid://6aykoyffxxnu" path="res://art/human_e_idle_2.png" id="4_cisnx"]
 [ext_resource type="Texture2D" uid="uid://rus8cdogd47n" path="res://art/human1_hit_1.png" id="5_4lgu2"]
 [ext_resource type="Texture2D" uid="uid://df34c5xe11s5w" path="res://art/human_becomeghost_1.png" id="5_4uoa7"]
 [ext_resource type="Texture2D" uid="uid://b0b3hsan3l3wu" path="res://art/human_1_walk_1.png" id="5_8vckj"]
 [ext_resource type="Texture2D" uid="uid://dsq3qn6m3h247" path="res://art/human1_sleep_1.png" id="5_l4nxo"]
+[ext_resource type="Texture2D" uid="uid://bcwygkctqun0c" path="res://art/egg_hit_3.png" id="5_p3ifj"]
 [ext_resource type="Texture2D" uid="uid://tdq05ekx33v3" path="res://art/human1_sleep_2.png" id="6_3k37q"]
 [ext_resource type="Texture2D" uid="uid://cc7w8mo6ry23a" path="res://art/human_becomeghost_2.png" id="6_6br4y"]
 [ext_resource type="Texture2D" uid="uid://1fpbey7igdxi" path="res://art/human1_hit_2.png" id="6_l4ngn"]
@@ -18,9 +22,32 @@
 [ext_resource type="Texture2D" uid="uid://c44rs122eo6xn" path="res://art/human1_eat_1.png" id="9_l7cq7"]
 [ext_resource type="Texture2D" uid="uid://bkqjaw16mrm1" path="res://art/human1_eat_2.png" id="10_6cmsi"]
 [ext_resource type="Texture2D" uid="uid://c14arxh2piix5" path="res://art/human1_eat_3.png" id="11_03ywn"]
+[ext_resource type="Texture2D" uid="uid://2uermrpijuki" path="res://art/human1_socialize_1.png" id="17_826vo"]
+[ext_resource type="Texture2D" uid="uid://c0iuayai61m68" path="res://art/human1_socialize_2.png" id="18_xfie7"]
+[ext_resource type="Texture2D" uid="uid://cbmjoat163pjj" path="res://art/human1_socialize_3.png" id="19_l6m7f"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cc41q"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3itri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_58fos")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6106a")
+}, {
+"duration": 2.1,
+"texture": ExtResource("5_p3ifj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8p6wf")
+}],
+"loop": true,
+"name": &"egg_become human",
+"speed": 6.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_u8fnk")
@@ -98,6 +125,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("17_826vo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_xfie7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_l6m7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_xfie7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_826vo")
+}],
+"loop": true,
+"name": &"human_socialize",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("5_8vckj")
 }, {
 "duration": 1.0,
@@ -121,7 +168,7 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"human"
+animation = &"human_becomeghost"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qfw4s")
@@ -142,8 +189,6 @@ wait_time = 2.5
 one_shot = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
 [connection signal="timeout" from="ActionCooldown" to="." method="_on_action_cooldown_timeout"]
 [connection signal="timeout" from="Action" to="." method="_on_action_timeout"]
