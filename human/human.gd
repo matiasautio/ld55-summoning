@@ -6,7 +6,8 @@ extends Area2D
 # keep it in balance or plunge it into chaos
 
 @export var type = "human"
-const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "island", "fire", "whale"]
+const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale"]
+# island is being checked by the water detector
 # 0 = egg, 1 = human, 2 = ghost
 var state = 1
 var size = Vector2(0,0)
@@ -30,10 +31,13 @@ var direction = 1
 var goal = null
 var has_reached_goal = false
 
+var clamp_start = Vector2(250, 64)#Vector2.ZERO
+
 # special conditions
 @export_enum("normal", "stuck", "wet") var condition: int
 @export var movement_boudnaries : ColorRect
 var movement_area
+
 
 func _ready():
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture("human", 0).get_size() * $AnimatedSprite2D.scale)
@@ -73,8 +77,9 @@ func _physics_process(delta):
 					play_animation("human")
 			position += velocity * delta
 		else:
-			_on_action_timeout()
+			#_on_action_timeout()
 			print("move to is null")
+			print("current action is ", current_action)
 	position = position.clamp(Vector2(313,64), screen_size)
 	if condition == 1:
 		position = position.clamp(Vector2(movement_area.position.x, movement_area.position.y), Vector2(movement_area.end.x, movement_area.end.y))
@@ -82,21 +87,30 @@ func _physics_process(delta):
 
 func _on_vision_area_entered(area):
 	if area != self:
-		if area.type == "wolf":
-			perform_action(area)
+		# Human is a ghost
+		if state != 2:
+			if area.type == "wolf":
+				perform_action(area)
+			else:
+				if THINGS.has(area.type) and can_have_action:
+					add_action_to_list(area)
+		# Human is a human (or an egg)
 		else:
-			if THINGS.has(area.type) and can_have_action:
-				add_action_to_list(area)
-				print(area)
+			if area.type == "time machine":
+				perform_action(area)
+			else:
+				if condition == 2 and area.type == "fire":
+					perform_action(area)
+				else:
+					if THINGS.has(area.type) and can_have_action:
+						add_action_to_list(area)
 
 
 func add_action_to_list(action):
-	#print(action.type)
 	possible_actions.append(action)
 	possible_action_types.append(action.type)
 	if $ActionDetermineWindow.time_left == 0:
 		$ActionDetermineWindow.start()
-	#possible_actions.clear()
 
 
 func _on_action_determine_window_timeout():
@@ -145,14 +159,29 @@ func perform_action(action):
 			else:
 				action_timer.start()
 				Console.add_message(type + " is time traveling")
-				goal.play_animation("timemachine")
+				goal.play_animation("time machine")
 				devolve()
+		"egg":
+			if !has_reached_goal:
+				goal = action
+			else:
+				action_timer.start()
+				Console.add_message(type + " is breaking an egg")
+				goal.play_animation("human_hit")
+				goal.evolve()
+		"fire":
+			if !has_reached_goal:
+				goal = action
+			else:
+				Console.add_message(type + " is performing a fire dance")
+				action_timer.start()
+				dance()
+		"whale":
+			action_timer.start()
 
 
 func goal_reached():
 	if goal != null:
-		if current_action == "time machine":
-			print("time machine reached")
 		if state == 1:
 			play_animation("human")
 		has_reached_goal = true
@@ -164,7 +193,6 @@ func goal_reached():
 
 func _on_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_mask == 0:
-		print("human clicked")
 		can_move = false
 		Console.show_popup(self)
 
@@ -187,7 +215,7 @@ func find_new_pos():
 		play_animation("human")
 	var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 1
 	idle_pos = position + movement_area
-	idle_pos = idle_pos.clamp(Vector2(313,64), screen_size)
+	idle_pos = idle_pos.clamp(clamp_start, screen_size)
 	next_pos.global_position = idle_pos
 
 
@@ -208,7 +236,7 @@ func _on_action_timeout():
 
 
 func die():
-	if state == 1:
+	if state == 1 and current_action != "taxi":
 		change_type("ghost")
 		state = 2
 		play_animation("human_becomeghost")
@@ -221,11 +249,23 @@ func devolve():
 		play_animation("egg")
 		can_move = false
 		position = Vector2(randf_range(0, screen_size.x), randf_range(0, screen_size.y))
-		position = position.clamp(Vector2(313,64), screen_size)
+		position = position.clamp(clamp_start, screen_size)
 	elif state == 2:
 		change_type("human")
 		state = 1
 		play_animation("human")
+
+
+func evolve():
+	if state == 0:
+		state = 1
+		play_animation("egg_break")
+		#enable_move()
+
+
+func dance():
+	play_animation("human_sleep")
+	#$Dance.start()
 
 
 func play_animation(animation_name):
@@ -236,10 +276,9 @@ func play_animation(animation_name):
 func _on_animated_sprite_2d_animation_finished():
 	if $AnimatedSprite2D.animation == "human_becomeghost":
 		play_animation("ghost")
-
-
-func _on_mouse_entered():
-	print("mouse entered")
+	if $AnimatedSprite2D.animation == "egg_break":
+		enable_move()
+		_on_action_timeout()
 
 
 func _on_idle_goal_reached_timeout():
@@ -251,13 +290,19 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	direction = -1
 	find_new_pos()
 
-# water checker
-func _on_area_entered(area):
-	print("aaa water")
+
+func make_stuck():
+	movement_area = movement_boudnaries.get_rect()
+
+
+func _on_water_detector_area_entered(area):
 	if area.type == "island":
+		if condition == 0:
+			condition = 2
+			Console.add_message(type + " is wet")
 		#can_move = false
 		direction = -1
 
 
-func make_stuck():
-	movement_area = movement_boudnaries.get_rect()
+func _on_dance_timeout():
+	pass # Replace with function body.

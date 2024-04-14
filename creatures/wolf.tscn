@@ -19,7 +19,7 @@ animations = [{
 "texture": ExtResource("4_kggei")
 }],
 "loop": true,
-"name": &"default",
+"name": &"wolf",
 "speed": 5.0
 }]
 
@@ -34,7 +34,8 @@ type = "wolf"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_a6o6n")
-autoplay = "default"
+animation = &"wolf"
+autoplay = "wolf"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_j5ewf")

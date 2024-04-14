@@ -9,7 +9,7 @@ var speed = 150
 
 
 func _ready():
-	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture("default", 0).get_size() * $AnimatedSprite2D.scale)
+	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture(type, 0).get_size() * $AnimatedSprite2D.scale)
 	movement_area = movement_boudnaries.get_rect()#global_position - $MovementArea.size
 	print(movement_area)
 	find_new_pos()
@@ -39,12 +39,6 @@ func _physics_process(delta):
 		#position = position.lerp(idle_pos, delta * 2)
 		#if position.distance_to(idle_pos) < 1:
 			#find_new_pos()
-
-
-func _on_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.button_mask == 0:
-		can_move = false
-		Console.show_popup(self)
 
 
 func _on_area_entered(area):

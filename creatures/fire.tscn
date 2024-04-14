@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfpnswx7fv61e"]
+[gd_scene load_steps=7 format=3 uid="uid://dlvf1q6udyu5u"]
 
+[ext_resource type="Script" path="res://creatures/fire.gd" id="1_chjeu"]
 [ext_resource type="Texture2D" uid="uid://bgs080beceqjs" path="res://art/fire_1.png" id="1_dfluj"]
 [ext_resource type="Texture2D" uid="uid://ela07q61us5k" path="res://art/fire_2.png" id="2_qbmnc"]
 [ext_resource type="Texture2D" uid="uid://bhsca6gsq6cak" path="res://art/fire_3.png" id="3_gq0mp"]
@@ -26,12 +27,18 @@ radius = 69.0
 height = 164.0
 
 [node name="Fire" type="Area2D"]
+script = ExtResource("1_chjeu")
+type = "fire"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_fd3kg")
 animation = &"fire"
+autoplay = "fire"
 frame = 2
 frame_progress = 0.20217
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_pui1e")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

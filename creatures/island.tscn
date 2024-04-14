@@ -11,6 +11,14 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_x3xg8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_x3xg8")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_350b6")
@@ -19,16 +27,8 @@ animations = [{
 "texture": ExtResource("3_vbo3u")
 }],
 "loop": true,
-"name": &"Island",
+"name": &"island",
 "speed": 3.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_x3xg8")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
 }]
 
 [node name="Island" type="Area2D"]
@@ -36,14 +36,17 @@ script = ExtResource("1_2nvkt")
 type = "island"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(785, 175)
+position = Vector2(12.0001, 3.00002)
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_iocnv")
-animation = &"Island"
-autoplay = "Island"
+animation = &"island"
+autoplay = "island"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-773, -172)
 polygon = PackedVector2Array(808, 165, 796, 161, 770, 162, 730, 162, 709, 163, 699, 192, 707, 205, 725, 207, 756, 207, 755, 250, 720, 251, 624, 200, 630, 140, 681, 102, 756, 98, 848, 111, 892, 121, 942, 157, 943, 208, 897, 242, 756, 250, 757, 207, 889, 204, 890, 190, 890, 176, 823, 176)
 
 [node name="Whale" parent="." instance=ExtResource("4_dwmic")]
-position = Vector2(-63, 18)
+position = Vector2(-13, 13)
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

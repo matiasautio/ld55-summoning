@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c72gv5k3ansqg"]
+[gd_scene load_steps=6 format=3 uid="uid://c72gv5k3ansqg"]
 
 [ext_resource type="Script" path="res://ui/console.gd" id="1_uvouq"]
+[ext_resource type="Theme" uid="uid://du5iuahwgap64" path="res://ui/main_theme.tres" id="2_hb1jm"]
 [ext_resource type="Script" path="res://ui/CreaturePopUp.gd" id="2_nfrai"]
 [ext_resource type="FontFile" uid="uid://0rli1k7ann8i" path="res://ui/FoundersGroteskMono-Medium.otf" id="3_jmbk8"]
 [ext_resource type="Texture2D" uid="uid://c5dhqafc7nvo2" path="res://art/UI_menu_settingsbutton.png" id="4_2481w"]
@@ -25,32 +26,29 @@ offset_bottom = 38.0
 scale = Vector2(1, 0.84)
 color = Color(0.137255, 0.137255, 0.156863, 1)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-visible = false
+[node name="ConsoleFeedBackground" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -648.0
-offset_right = -895.0
+offset_right = -930.0
 grow_horizontal = 2
 grow_vertical = 0
-color = Color(0.12549, 0.137255, 0.196078, 1)
+color = Color(0.137255, 0.137255, 0.156863, 1)
 
 [node name="Message" type="RichTextLabel" parent="CanvasLayer"]
-visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 14.0
-offset_top = -642.0
-offset_right = -905.0
+offset_top = -612.0
+offset_right = -933.0
 offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_colors/default_color = Color(1, 0.447059, 0.54902, 1)
-theme_override_font_sizes/normal_font_size = 18
+theme = ExtResource("2_hb1jm")
 scroll_active = false
 scroll_following = true
 

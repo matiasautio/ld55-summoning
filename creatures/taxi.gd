@@ -1,7 +1,7 @@
 extends Creature
 
 var new_pos = Vector2.ZERO
-var movement = 1000
+var movement = -1000
 var should_move = false
 var passenger = null
 
@@ -11,18 +11,15 @@ func _physics_process(delta):
 		passenger.position = $RidingPos.global_position
 		position = position.lerp(new_pos, delta * 2)
 		if position.distance_to(new_pos) < size.x / 2:
+			print("taxi trip over")
 			should_move = false
 			passenger.can_move = true
 			passenger.current_action = null
 			passenger.find_new_pos()
 			passenger = null
-	position = position.clamp(Vector2(313,64), screen_size)
+	position = position.clamp(clamp_start, screen_size)#Vector2(313,64), screen_size)
+	#print(position)
 
-
-func _on_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton and event.button_mask == 0:
-		can_move = false
-		Console.show_popup(self)
 
 
 func move(_passenger):
@@ -36,7 +33,8 @@ func move(_passenger):
 		else:
 			$AnimatedSprite2D.flip_h = false
 		new_pos = global_position + Vector2(movement, 0)
-		new_pos = new_pos.clamp(Vector2(313,64), screen_size)
+		new_pos = new_pos.clamp(clamp_start, screen_size)
+		print(new_pos)
 		should_move = true
 
 

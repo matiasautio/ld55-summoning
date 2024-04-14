@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dltnp53o2ytoa"]
+[gd_scene load_steps=8 format=3 uid="uid://b0cfd4esiayn6"]
 
 [ext_resource type="Texture2D" uid="uid://d0b4q2meatuq4" path="res://art/timemachine_1.png" id="1_jq5ei"]
 [ext_resource type="Script" path="res://creatures/timemachine.gd" id="1_ofbcr"]
@@ -33,7 +33,7 @@ animations = [{
 "texture": ExtResource("1_jq5ei")
 }],
 "loop": false,
-"name": &"timemachine",
+"name": &"time machine",
 "speed": 5.0
 }]
 
@@ -48,7 +48,10 @@ type = "time machine"
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_lpaet")
+animation = &"time machine"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_ehio4")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

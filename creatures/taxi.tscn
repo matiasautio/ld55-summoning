@@ -10,7 +10,7 @@ animations = [{
 "texture": ExtResource("2_bbypt")
 }],
 "loop": true,
-"name": &"default",
+"name": &"taxi",
 "speed": 5.0
 }]
 
@@ -27,6 +27,7 @@ script = ExtResource("1_tcwuf")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_mfjv1")
+animation = &"taxi"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mmk8n")

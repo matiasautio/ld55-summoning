@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=28 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
 [ext_resource type="Texture2D" uid="uid://cw1mc0dbabatv" path="res://art/egg.png" id="2_ew4f7"]
@@ -44,7 +44,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("5_552fp")
 }],
-"loop": true,
+"loop": false,
 "name": &"egg_break",
 "speed": 5.0
 }, {
@@ -136,22 +136,26 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qfw4s"]
-size = Vector2(28, 10)
+size = Vector2(28, 37)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xmw3b"]
 radius = 79.0759
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sq1em"]
+size = Vector2(28, 9)
+
 [node name="Human" type="Area2D" groups=["human"]]
+monitoring = false
 script = ExtResource("1_wbjps")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"human"
+animation = &"egg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 14)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_qfw4s")
 
 [node name="Vision" type="Area2D" parent="."]
@@ -172,6 +176,14 @@ one_shot = true
 [node name="ActionDetermineWindow" type="Timer" parent="."]
 one_shot = true
 
+[node name="IdleGoalReached" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Dance" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
 [node name="NextPos" type="Node2D" parent="."]
 script = ExtResource("23_pudja")
 
@@ -184,17 +196,20 @@ offset_bottom = 8.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="NextPos"]
 
-[node name="IdleGoalReached" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
+[node name="WaterDetector" type="Area2D" parent="."]
+monitorable = false
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WaterDetector"]
+position = Vector2(0, 14.5)
+shape = SubResource("RectangleShape2D_sq1em")
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Vision" to="." method="_on_vision_area_entered"]
 [connection signal="timeout" from="ActionCooldown" to="." method="_on_action_cooldown_timeout"]
 [connection signal="timeout" from="Action" to="." method="_on_action_timeout"]
 [connection signal="timeout" from="ActionDetermineWindow" to="." method="_on_action_determine_window_timeout"]
-[connection signal="screen_exited" from="NextPos/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="IdleGoalReached" to="." method="_on_idle_goal_reached_timeout"]
+[connection signal="timeout" from="Dance" to="." method="_on_dance_timeout"]
+[connection signal="screen_exited" from="NextPos/VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="area_entered" from="WaterDetector" to="." method="_on_water_detector_area_entered"]
