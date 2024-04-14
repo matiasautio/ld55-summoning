@@ -31,7 +31,7 @@ position = Vector2(785, 175)
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_iocnv")
 animation = &"Island"
-frame_progress = 0.235562
+frame_progress = 0.342802
 
 [node name="Whale" parent="." instance=ExtResource("4_dwmic")]
 position = Vector2(-63, 18)

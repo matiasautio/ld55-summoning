@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfr0lg70taks0"]
+[gd_scene load_steps=4 format=3 uid="uid://bfr0lg70taks0"]
 
 [ext_resource type="Texture2D" uid="uid://ccfmdr1vnytbk" path="res://art/whale.png" id="1_mxna6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jvgli"]
+radius = 20.0427
+height = 112.005
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vuk8i"]
 animations = [{
@@ -16,6 +20,9 @@ animations = [{
 [node name="Whale" type="Area2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(822, 168)
+rotation = 1.57014
+shape = SubResource("CapsuleShape2D_jvgli")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(830, 152)
