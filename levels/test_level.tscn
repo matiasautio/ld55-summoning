@@ -42,7 +42,7 @@ movement_boudnaries = NodePath("../MovementArea")
 position = Vector2(544, 326)
 
 [node name="timemachine" parent="." instance=ExtResource("5_mwrc3")]
-position = Vector2(431, 550)
+position = Vector2(384, 230)
 
 [node name="Human" parent="." instance=ExtResource("2_wrmqw")]
 position = Vector2(334, 264)

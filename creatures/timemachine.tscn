@@ -6,11 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://dtsnsdhh0truv" path="res://art/timemachine_3.png" id="3_kmkxb"]
 [ext_resource type="Texture2D" uid="uid://c24oj1ujppok3" path="res://art/timemachine_2.png" id="4_0rsvn"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ehio4"]
-size = Vector2(44, 82)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_lpaet"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jq5ei")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_jq5ei")
@@ -23,22 +28,27 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_0rsvn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_jq5ei")
 }],
 "loop": false,
 "name": &"timemachine",
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ehio4"]
+size = Vector2(80, 120)
+
 [node name="timemachine" type="Area2D"]
-monitoring = false
+y_sort_enabled = true
 script = ExtResource("1_ofbcr")
 type = "time machine"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_ehio4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_lpaet")
-animation = &"timemachine"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ehio4")

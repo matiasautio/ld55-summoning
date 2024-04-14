@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3gf618byhlr4"]
+[gd_scene load_steps=4 format=3 uid="uid://b3gf618byhlr4"]
 
 [ext_resource type="PackedScene" uid="uid://gkg6imyesjnw" path="res://creatures/taxi.tscn" id="1_ew07n"]
 [ext_resource type="PackedScene" uid="uid://x7pch5eqnnqv" path="res://human/human.tscn" id="2_6y1qt"]
+[ext_resource type="PackedScene" uid="uid://b0cfd4esiayn6" path="res://creatures/timemachine.tscn" id="3_sif5n"]
 
 [node name="TaxiTest" type="Node2D"]
 
@@ -16,8 +17,10 @@ grow_vertical = 2
 color = Color(1, 0.662745, 0.294118, 1)
 
 [node name="Taxi" parent="." instance=ExtResource("1_ew07n")]
-position = Vector2(582, 324)
-type = null
+position = Vector2(425, 173)
+
+[node name="timemachine" parent="." instance=ExtResource("3_sif5n")]
+position = Vector2(572, 361)
 
 [node name="Human" parent="." instance=ExtResource("2_6y1qt")]
 position = Vector2(498, 360)

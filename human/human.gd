@@ -6,13 +6,15 @@ extends Area2D
 # keep it in balance or plunge it into chaos
 
 @export var type = "human"
-const THINGS = ["human", "wolf", "taxi"]
+const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine"]
 # 0 = egg, 1 = human, 2 = ghost
 var state = 1
 
 var size = Vector2(0,0)
 
 # logic
+var possible_actions = []
+var possible_action_types = []
 var can_have_action = true
 var current_action = null
 @onready var action_timer = $Action
@@ -50,6 +52,8 @@ func _physics_process(delta):
 	if can_move:
 		if goal != null:
 				#if !specific_goal:
+				if current_action == "time machine":
+					print(position.distance_to(goal.global_position), "size is ", goal.size.x)
 				position = position.lerp(goal.global_position * direction, delta * 2)
 				if position.distance_to(goal.global_position) < goal.size.x:
 					goal_reached()
@@ -73,13 +77,36 @@ func _on_vision_area_entered(area):
 	if area != self:
 		if THINGS.has(area.type) and can_have_action:
 			#print("i saw something")
-			determine_action(area)
+			add_action_to_list(area)
+			#perform_action(area)
 			#goal = area
 			#start_pos = global_position
 			#determine_action(area)
 
 
-func determine_action(action):
+func add_action_to_list(action):
+	print(action.type)
+	possible_actions.append(action)
+	possible_action_types.append(action.type)
+	if $ActionDetermineWindow.time_left == 0:
+		$ActionDetermineWindow.start()
+	#possible_actions.clear()
+
+
+func _on_action_determine_window_timeout():
+	if state == 2:
+		if possible_action_types.has("time machine"):
+			var action_id = possible_action_types.find("time machine")
+			perform_action(possible_actions[action_id])
+		else:
+			perform_action(possible_actions[0])
+	elif state == 1:
+		perform_action(possible_actions[0])
+	possible_actions.clear()
+	possible_action_types.clear()
+
+
+func perform_action(action):
 	can_have_action = false
 	current_action = action.type
 	#print(current_action)
@@ -109,23 +136,27 @@ func determine_action(action):
 				action_timer.start()
 				Console.add_message(type + " is riding a taxi")
 		"time machine":
-			if state == 2:
-				if !has_reached_goal:
-					goal = action
-				else:
-					action_timer.start()
-					Console.add_message(type + " is time traveling")
+			#if state == 2:
+			if !has_reached_goal:
+				goal = action
 			else:
-				print("i dont need to use the time machine")
-				_on_action_timeout()
+				action_timer.start()
+				Console.add_message(type + " is time traveling")
+				goal.play_animation("timemachine")
+				devolve()
+			#else:
+				#print("i dont need to use the time machine")
+				#_on_action_timeout()
 
 
 func goal_reached():
+	if current_action == "time machine":
+		print("time machine reached")
 	if state == 1:
 		play_animation("human")
 	has_reached_goal = true
-	specific_goal = false
-	determine_action(goal)
+	#specific_goal = false
+	perform_action(goal)
 	goal = null
 
 
@@ -140,13 +171,14 @@ func _on_input_event(viewport, event, shape_idx):
 func change_type(new_type):
 	#print("my new type is ", new_type)
 	if monitorable:
-		monitorable = false
+		set_deferred("monitorable", false)
 	type = new_type
-	monitorable = true
+	set_deferred("monitorable", true)
 
 
 func enable_move():
-	can_move = true
+	if state != 0:
+		can_move = true
 
 
 func find_new_pos():
@@ -178,9 +210,24 @@ func _on_action_timeout():
 
 
 func die():
-	change_type("ghost")
-	state = 2
-	play_animation("human_becomeghost")
+	if state == 1:
+		change_type("ghost")
+		state = 2
+		play_animation("human_becomeghost")
+
+
+func devolve():
+	if state == 1:
+		change_type("egg")
+		state = 0
+		play_animation("egg")
+		can_move = false
+		position = Vector2(randf_range(0, screen_size.x), randf_range(0, screen_size.y))
+		position = position.clamp(Vector2(313,64), screen_size)
+	elif state == 2:
+		change_type("human")
+		state = 1
+		play_animation("human")
 
 
 func play_animation(animation_name):

@@ -108,6 +108,7 @@ offset_bottom = 50.0
 color = Color(1, 1, 1, 0)
 
 [node name="MissionPanel" type="RichTextLabel" parent="CanvasLayer/HUDpanel"]
+layout_mode = 0
 offset_left = -61.0
 offset_top = 9.0
 offset_right = 13.0
@@ -119,6 +120,7 @@ text = "Mission 1
 "
 
 [node name="Humans" type="RichTextLabel" parent="CanvasLayer/HUDpanel"]
+layout_mode = 0
 offset_left = -370.0
 offset_top = 9.0
 offset_right = -296.0
@@ -130,6 +132,7 @@ text = "Humans:
 "
 
 [node name="MissionPanel2" type="RichTextLabel" parent="CanvasLayer/HUDpanel"]
+layout_mode = 0
 offset_left = 48.0
 offset_top = 9.0
 offset_right = 391.0
