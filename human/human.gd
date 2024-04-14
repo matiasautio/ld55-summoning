@@ -7,6 +7,8 @@ extends Area2D
 
 @export var type = "human"
 const THINGS = ["human", "wolf", "taxi"]
+# 0 = egg, 1 = human, 2 = ghost
+var state = 1
 
 var size = Vector2(0,0)
 
@@ -37,6 +39,7 @@ func _ready():
 	screen_size = get_viewport_rect().size# - Vector2(313,0)# 93 + size.y)
 	print(screen_size)
 	find_new_pos()
+	play_animation("human")
 	#print(idle_pos)
 
 
@@ -54,6 +57,8 @@ func _physics_process(delta):
 					if position.distance_to(goal.specific_goal()) < 10:
 						goal_reached()
 		if goal == null and current_action == null:
+			if $AnimatedSprite2D.animation != "human_walk":
+				play_animation("human_walk")
 			#t += delta * 2
 			position = position.lerp(idle_pos, delta * 2)
 			if position.distance_to(idle_pos) < 1:
@@ -103,6 +108,7 @@ func determine_action(action):
 
 
 func goal_reached():
+	play_animation("human")
 	has_reached_goal = true
 	specific_goal = false
 	determine_action(goal)
@@ -127,6 +133,7 @@ func change_type(new_type):
 
 func find_new_pos():
 	#t = 0
+	play_animation("human")
 	var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 2
 	idle_pos = global_position + movement_area
 	idle_pos = idle_pos.clamp(Vector2(313,64), screen_size)
@@ -153,4 +160,15 @@ func _on_action_timeout():
 
 func die():
 	change_type("ghost")
-	$AnimatedSprite2D.animation = "ghost"
+	state = 2
+	play_animation("human_becomeghost")
+
+
+func play_animation(animation_name):
+	$AnimatedSprite2D.animation = animation_name
+	$AnimatedSprite2D.play()
+
+
+func _on_animated_sprite_2d_animation_finished():
+	if $AnimatedSprite2D.animation == "human_becomeghost":
+		play_animation("ghost")
