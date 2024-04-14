@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=22 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
 [ext_resource type="Texture2D" uid="uid://bbpywgnae54tl" path="res://art/ghost_move_1.png" id="2_u8fnk"]
@@ -18,9 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://c44rs122eo6xn" path="res://art/human1_eat_1.png" id="9_l7cq7"]
 [ext_resource type="Texture2D" uid="uid://bkqjaw16mrm1" path="res://art/human1_eat_2.png" id="10_6cmsi"]
 [ext_resource type="Texture2D" uid="uid://c14arxh2piix5" path="res://art/human1_eat_3.png" id="11_03ywn"]
-[ext_resource type="Texture2D" uid="uid://de14wr4bb3xqf" path="res://art/wolf_1.png" id="19_2or47"]
-[ext_resource type="Texture2D" uid="uid://bdrjxqrvxa26j" path="res://art/wolf_2.png" id="20_gvhwe"]
-[ext_resource type="Texture2D" uid="uid://d13sqtcup2sf1" path="res://art/wolf_3.png" id="21_go23v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cc41q"]
 animations = [{
@@ -109,20 +106,6 @@ animations = [{
 "loop": true,
 "name": &"human_walk",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("19_2or47")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_gvhwe")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_go23v")
-}],
-"loop": true,
-"name": &"wolf_move",
-"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qfw4s"]
@@ -138,9 +121,7 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"wolf_move"
-frame = 1
-frame_progress = 0.943584
+animation = &"ghost"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qfw4s")
