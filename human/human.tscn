@@ -83,7 +83,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("8_ktxmw")
 }],
-"loop": true,
+"loop": false,
 "name": &"human_becomeghost",
 "speed": 5.0
 }, {
@@ -168,8 +168,7 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"egg_become human"
-frame_progress = 0.460492
+animation = &"human_becomeghost"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qfw4s")
