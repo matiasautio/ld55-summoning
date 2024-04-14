@@ -10,6 +10,14 @@ animations = [{
 "texture": ExtResource("1_mxna6")
 }],
 "loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mxna6")
+}],
+"loop": true,
 "name": &"whale",
 "speed": 5.0
 }]

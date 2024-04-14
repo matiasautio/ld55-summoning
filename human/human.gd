@@ -87,21 +87,22 @@ func _physics_process(delta):
 
 func _on_vision_area_entered(area):
 	if area != self:
-		# Human is a ghost
+		# Human is not a ghost
 		if state != 2:
 			if area.type == "wolf":
-				perform_action(area)
-			else:
-				if THINGS.has(area.type) and can_have_action:
-					add_action_to_list(area)
-		# Human is a human (or an egg)
-		else:
-			if area.type == "time machine":
 				perform_action(area)
 			else:
 				if condition == 2 and area.type == "fire":
 					perform_action(area)
 				else:
+					if THINGS.has(area.type) and can_have_action:
+						add_action_to_list(area)
+		# Human is a ghost
+		else:
+			if area.type == "time machine":
+				perform_action(area)
+			else:
+				if area.type != "egg":
 					if THINGS.has(area.type) and can_have_action:
 						add_action_to_list(area)
 
@@ -167,16 +168,17 @@ func perform_action(action):
 			else:
 				action_timer.start()
 				Console.add_message(type + " is breaking an egg")
-				goal.play_animation("human_hit")
+				play_animation("human_hit")
 				goal.evolve()
 		"fire":
 			if !has_reached_goal:
 				goal = action
 			else:
-				Console.add_message(type + " is performing a fire dance")
+				Console.add_message(type + " is performing a dance")
 				action_timer.start()
 				dance()
 		"whale":
+			Console.add_message(type + " is looking at whale")
 			action_timer.start()
 
 
@@ -225,6 +227,8 @@ func _on_action_cooldown_timeout():
 
 
 func _on_action_timeout():
+	if state == 1:
+		play_animation("human")
 	goal = null
 	has_reached_goal = false
 	current_action = null
@@ -299,7 +303,7 @@ func _on_water_detector_area_entered(area):
 	if area.type == "island":
 		if condition == 0:
 			condition = 2
-			Console.add_message(type + " is wet")
+			Console.add_message(type + " is getting wet")
 		#can_move = false
 		direction = -1
 
