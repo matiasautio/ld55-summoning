@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://x7pch5eqnnqv" path="res://human/human.tscn" id="2_wrmqw"]
 [ext_resource type="PackedScene" uid="uid://dl8sfgp4mnyo2" path="res://creatures/wolf.tscn" id="3_aq4in"]
 [ext_resource type="PackedScene" uid="uid://gkg6imyesjnw" path="res://creatures/taxi.tscn" id="4_rdkwh"]
-[ext_resource type="PackedScene" uid="uid://dltnp53o2ytoa" path="res://creatures/timemachine.tscn" id="5_mwrc3"]
+[ext_resource type="PackedScene" uid="uid://b0cfd4esiayn6" path="res://creatures/timemachine.tscn" id="5_mwrc3"]
 [ext_resource type="PackedScene" uid="uid://cj1w5yk8rehdm" path="res://creatures/island.tscn" id="6_2b36r"]
 
 [node name="TestLevel" type="Node2D"]
@@ -56,7 +56,7 @@ position = Vector2(387, 113)
 position = Vector2(182, 477)
 
 [node name="Human4" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("2_wrmqw")]
-position = Vector2(1003, 251)
+position = Vector2(1006, 252)
 condition = 1
 movement_boudnaries = NodePath("../Island/IslandStuckZone")
 

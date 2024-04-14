@@ -21,6 +21,14 @@ animations = [{
 "loop": true,
 "name": &"Island",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_x3xg8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
 }]
 
 [node name="Island" type="Area2D"]
@@ -32,7 +40,7 @@ position = Vector2(785, 175)
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_iocnv")
 animation = &"Island"
-frame_progress = 0.859813
+autoplay = "Island"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(808, 165, 796, 161, 770, 162, 730, 162, 709, 163, 699, 192, 707, 205, 725, 207, 756, 207, 755, 250, 720, 251, 624, 200, 630, 140, 681, 102, 756, 98, 848, 111, 892, 121, 942, 157, 943, 208, 897, 242, 756, 250, 757, 207, 889, 204, 890, 190, 890, 176, 823, 176)
