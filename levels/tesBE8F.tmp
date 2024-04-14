@@ -35,15 +35,7 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Island" parent="." instance=ExtResource("6_2b36r")]
-position = Vector2(159, 73)
-
-[node name="IslandStuckZone" type="ColorRect" parent="Island"]
-offset_left = 707.0
-offset_top = 163.0
-offset_right = 891.0
-offset_bottom = 188.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
+position = Vector2(159, 297)
 
 [node name="Wolf" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("3_aq4in")]
 position = Vector2(641, 276)
@@ -55,10 +47,10 @@ position = Vector2(387, 113)
 [node name="timemachine" parent="." instance=ExtResource("5_mwrc3")]
 position = Vector2(182, 477)
 
-[node name="Human4" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("2_wrmqw")]
-position = Vector2(1003, 251)
+[node name="Human4" parent="." instance=ExtResource("2_wrmqw")]
+position = Vector2(1013, 474)
+speed = 10
 condition = 1
-movement_boudnaries = NodePath("../Island/IslandStuckZone")
 
 [node name="Human" parent="." instance=ExtResource("2_wrmqw")]
 position = Vector2(210, 83)

@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cj1w5yk8rehdm"]
+[gd_scene load_steps=7 format=3 uid="uid://cj1w5yk8rehdm"]
 
+[ext_resource type="Script" path="res://creatures/island.gd" id="1_2nvkt"]
 [ext_resource type="Texture2D" uid="uid://bixj8xd4p1n65" path="res://art/island_1.png" id="1_x3xg8"]
 [ext_resource type="Texture2D" uid="uid://7ncw8thkk34d" path="res://art/island_2.png" id="2_350b6"]
 [ext_resource type="Texture2D" uid="uid://cq3ekv55n86hi" path="res://art/island_3.png" id="3_vbo3u"]
@@ -23,8 +24,8 @@ animations = [{
 }]
 
 [node name="Island" type="Area2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+script = ExtResource("1_2nvkt")
+type = "island"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(785, 175)
@@ -32,6 +33,9 @@ scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_iocnv")
 animation = &"Island"
 frame_progress = 0.859813
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(808, 165, 796, 161, 770, 162, 730, 162, 709, 163, 699, 192, 707, 205, 725, 207, 756, 207, 755, 250, 720, 251, 624, 200, 630, 140, 681, 102, 756, 98, 848, 111, 892, 121, 942, 157, 943, 208, 897, 242, 756, 250, 757, 207, 889, 204, 890, 190, 890, 176, 823, 176)
 
 [node name="Whale" parent="." instance=ExtResource("4_dwmic")]
 position = Vector2(-63, 18)

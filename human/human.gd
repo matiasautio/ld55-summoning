@@ -6,10 +6,9 @@ extends Area2D
 # keep it in balance or plunge it into chaos
 
 @export var type = "human"
-const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine"]
+const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "island", "fire", "whale"]
 # 0 = egg, 1 = human, 2 = ghost
 var state = 1
-
 var size = Vector2(0,0)
 
 # logic
@@ -23,36 +22,30 @@ var current_action = null
 # movement logic
 @export var can_move = true
 var screen_size
-
-var speed = 100
-
-var start_pos = Vector2.ZERO
-var idle_pos = Vector2.ZERO
+@export var speed = 100
+var initial_speed = 0
 @onready var next_pos = $NextPos
-
-var old_pos = Vector2.ZERO
-var t = 0.0
-var direction = Vector2(1,1)
+var idle_pos = Vector2.ZERO
+var direction = 1
 var goal = null
-var specific_goal = false
 var has_reached_goal = false
 
+# special conditions
+@export_enum("normal", "stuck", "wet") var condition: int
+@export var movement_boudnaries : ColorRect
+var movement_area
 
 func _ready():
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture("human", 0).get_size() * $AnimatedSprite2D.scale)
-	#print(position)
-	screen_size = get_viewport_rect().size# - Vector2(313,0)# 93 + size.y)
-	#print(screen_size)
-	#next_pos.call_deferred("reparent", get_parent())
-	#remove_child(next_pos)
-	#get_parent().call_deferred("add_child",next_pos)
-	#next_pos.global_position = Vector2(500,300)
+	screen_size = get_viewport_rect().size
 	find_new_pos()
 	if state == 1:
 		play_animation("human")
+	initial_speed = speed
+	if condition == 1:
+		make_stuck()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	#t += delta * 0.4
 	if can_move:
@@ -66,7 +59,7 @@ func _physics_process(delta):
 		if move_to != null:
 			var velocity = Vector2.ZERO
 			var direction_to_target = Vector2.ZERO
-			direction_to_target = (move_to.global_transform.origin - global_transform.origin).normalized()
+			direction_to_target = ((move_to.global_transform.origin - global_transform.origin) * direction).normalized()
 			#print(direction_to_target)
 			velocity = direction_to_target
 			if global_transform.origin.distance_to(move_to.global_position) < move_to.size.x:
@@ -82,38 +75,19 @@ func _physics_process(delta):
 		else:
 			_on_action_timeout()
 			print("move to is null")
-				#if !specific_goal:
-				#if current_action == "time machine":
-					#print(position.distance_to(goal.global_position), "size is ", goal.size.x)
-				#position = position.lerp(goal.global_position * direction, delta * 2)
-				#if position.distance_to(goal.global_position) < goal.size.x:
-					#goal_reached()
-				#else:
-					#position = position.lerp(goal.specific_goal() * direction, delta * 2)
-					#if position.distance_to(goal.specific_goal()) < 10:
-						#goal_reached()
-		#if goal == null and current_action == null:
-			#if $AnimatedSprite2D.animation != "human_walk":
-				#if state == 1:
-					#play_animation("human_walk")
-			##t += delta * 2
-			#position = position.lerp(idle_pos, delta * 2)
-			#if position.distance_to(idle_pos) < 1:
-				#find_new_pos()
-				
 	position = position.clamp(Vector2(313,64), screen_size)
+	if condition == 1:
+		position = position.clamp(Vector2(movement_area.position.x, movement_area.position.y), Vector2(movement_area.end.x, movement_area.end.y))
 
 
 func _on_vision_area_entered(area):
 	if area != self:
-		if THINGS.has(area.type) and can_have_action:
-			#print("i saw something")
-			add_action_to_list(area)
-			print(area)
-			#perform_action(area)
-			#goal = area
-			#start_pos = global_position
-			#determine_action(area)
+		if area.type == "wolf":
+			perform_action(area)
+		else:
+			if THINGS.has(area.type) and can_have_action:
+				add_action_to_list(area)
+				print(area)
 
 
 func add_action_to_list(action):
@@ -142,10 +116,8 @@ func perform_action(action):
 	if action == null:
 		_on_action_timeout()
 		return
-	#print(action)
 	can_have_action = false
 	current_action = action.type
-	#print(current_action)
 	match current_action:
 		"human":
 			if !has_reached_goal:
@@ -155,16 +127,12 @@ func perform_action(action):
 				Console.add_message(type + " is greeting human")
 		"wolf":
 			action_timer.start()
-			direction = action.global_position.direction_to(
-				self.position)
+			direction = -1
+			speed = 150
 			goal = action
-			#print("direction is ", action.global_position.direction_to(self.position))
-			#goal = action.global_position.direction_to(self)
 			Console.add_message(type + " is afraid of wolf")
 		"taxi":
-			#print(current_action)
 			if !has_reached_goal:
-				#specific_goal = true
 				goal = action
 			else:
 				if goal.has_method("move"):
@@ -172,7 +140,6 @@ func perform_action(action):
 				action_timer.start()
 				Console.add_message(type + " is riding a taxi")
 		"time machine":
-			#if state == 2:
 			if !has_reached_goal:
 				goal = action
 			else:
@@ -180,9 +147,6 @@ func perform_action(action):
 				Console.add_message(type + " is time traveling")
 				goal.play_animation("timemachine")
 				devolve()
-			#else:
-				#print("i dont need to use the time machine")
-				#_on_action_timeout()
 
 
 func goal_reached():
@@ -192,7 +156,6 @@ func goal_reached():
 		if state == 1:
 			play_animation("human")
 		has_reached_goal = true
-		#specific_goal = false
 		perform_action(goal)
 		goal = null
 	else:
@@ -200,7 +163,6 @@ func goal_reached():
 
 
 func _on_input_event(viewport, event, shape_idx):
-	#print(event)
 	if event is InputEventMouseButton and event.button_mask == 0:
 		print("human clicked")
 		can_move = false
@@ -208,7 +170,6 @@ func _on_input_event(viewport, event, shape_idx):
 
 
 func change_type(new_type):
-	#print("my new type is ", new_type)
 	if monitorable:
 		set_deferred("monitorable", false)
 	type = new_type
@@ -221,31 +182,27 @@ func enable_move():
 
 
 func find_new_pos():
-	#t = 0
+	direction = 1
 	if state == 1:
 		play_animation("human")
-	var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 2
+	var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 1
 	idle_pos = position + movement_area
 	idle_pos = idle_pos.clamp(Vector2(313,64), screen_size)
 	next_pos.global_position = idle_pos
-	#print(next_pos.position)
-	#start_pos = global_position
-	#print(global_position, position)
-	#print(idle_pos)
 
 
 func _on_action_cooldown_timeout():
-	$Vision.monitoring = true
+	#$Vision.monitoring = true
 	can_have_action = true
 
 
 func _on_action_timeout():
-	#can_have_action = false
 	goal = null
 	has_reached_goal = false
 	current_action = null
-	direction = Vector2(1,1)
-	$Vision.monitoring = false
+	direction = 1
+	speed = initial_speed
+	#$Vision.monitoring = false
 	action_cooldown_timer.start()
 	find_new_pos()
 
@@ -290,4 +247,17 @@ func _on_idle_goal_reached_timeout():
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
+	#pass
+	direction = -1
 	find_new_pos()
+
+# water checker
+func _on_area_entered(area):
+	print("aaa water")
+	if area.type == "island":
+		#can_move = false
+		direction = -1
+
+
+func make_stuck():
+	movement_area = movement_boudnaries.get_rect()

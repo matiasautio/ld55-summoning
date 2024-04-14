@@ -5,6 +5,7 @@ extends Creature
 var movement_area
 
 var idle_pos = Vector2.ZERO
+var speed = 150
 
 
 func _ready():
@@ -16,9 +17,28 @@ func _ready():
 
 func _physics_process(delta):
 	if can_move:
-		position = position.lerp(idle_pos, delta * 2)
-		if position.distance_to(idle_pos) < 1:
+		var velocity = Vector2.ZERO
+		var direction_to_target = Vector2.ZERO
+		direction_to_target = (idle_pos - global_position).normalized()
+		#print(direction_to_target)
+		velocity = direction_to_target
+		if global_transform.origin.distance_to(idle_pos) < 2:
 			find_new_pos()
+		if velocity.length() > 0:
+			velocity = velocity.normalized() * speed
+			if velocity > Vector2.ZERO:
+				$AnimatedSprite2D.flip_h = true
+			else:
+				$AnimatedSprite2D.flip_h = false
+			#if state == 1:
+				#play_animation("human_walk")
+		#else:
+			#if state == 1:
+				#play_animation("human")
+		position += velocity * delta
+		#position = position.lerp(idle_pos, delta * 2)
+		#if position.distance_to(idle_pos) < 1:
+			#find_new_pos()
 
 
 func _on_input_event(viewport, event, shape_idx):

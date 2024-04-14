@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dltnp53o2ytoa"]
+[gd_scene load_steps=8 format=3 uid="uid://b0cfd4esiayn6"]
 
 [ext_resource type="Texture2D" uid="uid://d0b4q2meatuq4" path="res://art/timemachine_1.png" id="1_jq5ei"]
 [ext_resource type="Script" path="res://creatures/timemachine.gd" id="1_ofbcr"]
