@@ -1,28 +1,40 @@
 extends MarginContainer
 
-
-var creature_types = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale", "island", "donut"]
+# ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale", "island", "donut"]
+var creature_types = []
 var current_creature = null
+@export var button_scene : PackedScene
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	var value = 0
-	for type in creature_types:
-		print(value)
-		var new_button = $VBoxContainer/Type.duplicate()
+	pass
+	#var value = 0
+	#for type in creature_types:
+		#print(value)
+		#var new_button = $VBoxContainer/Type.duplicate()
+		#new_button.text = type
+		#$VBoxContainer.add_child(new_button)
+		##new_button.position += Vector2(0, 50 * value)
+		#new_button.pressed.connect(button_pressed.bind(new_button))
+		##if value == 0:
+			##new_button.pressed.connect(on_human_pressed)
+		##elif value == 1:
+			##new_button.pressed.connect(on_wolf_pressed)
+		##elif value == 2:
+			##new_button.pressed.connect(on_taxi_pressed)
+		#value += 1
+	#$VBoxContainer/Type.queue_free()
+
+
+func add_creature_type(type):
+	if creature_types.has(type):
+		return
+	else:
+		creature_types.append(type)
+		var new_button = button_scene.instantiate()
 		new_button.text = type
 		$VBoxContainer.add_child(new_button)
-		#new_button.position += Vector2(0, 50 * value)
 		new_button.pressed.connect(button_pressed.bind(new_button))
-		#if value == 0:
-			#new_button.pressed.connect(on_human_pressed)
-		#elif value == 1:
-			#new_button.pressed.connect(on_wolf_pressed)
-		#elif value == 2:
-			#new_button.pressed.connect(on_taxi_pressed)
-		value += 1
-	$VBoxContainer/Type.queue_free()
 
 
 func _process(delta):
@@ -34,25 +46,12 @@ func button_pressed(button):
 	apply_changes_to_creature()
 
 
-func on_human_pressed():
-	current_creature.change_type("human")
-	apply_changes_to_creature()
-
-
-func on_wolf_pressed():
-	current_creature.change_type("wolf")
-	apply_changes_to_creature()
-
-
-func on_taxi_pressed():
-	current_creature.change_type("taxi")
-	apply_changes_to_creature()
-
-
 func apply_changes_to_creature():
 	current_creature.enable_move()
 	$VBoxContainer/CurrentType.text = "[center]" + current_creature.type
 	$ClosePopUpDelay.start()
+	if !current_creature.is_active:
+		current_creature.activate_creature()
 	current_creature = null
 
 

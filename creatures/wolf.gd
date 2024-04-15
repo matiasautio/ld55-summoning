@@ -12,12 +12,13 @@ func _ready():
 	original_type = "wolf"
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture(type, 0).get_size() * $AnimatedSprite2D.scale)
 	movement_area = movement_boudnaries.get_rect()#global_position - $MovementArea.size
-	print(movement_area)
+	#print(movement_area)
 	find_new_pos()
+	type = "???"
 
 
 func _physics_process(delta):
-	if can_move:
+	if can_move and is_active:
 		var velocity = Vector2.ZERO
 		var direction_to_target = Vector2.ZERO
 		direction_to_target = (idle_pos - global_position).normalized()
@@ -43,9 +44,10 @@ func _physics_process(delta):
 
 
 func _on_area_entered(area):
-	if area.type != "ghost":
-		Console.add_message(type + " is eating " + area.type)
-		area.die()
+	if is_active:
+		if area.type != "ghost" and area.type != "???" and area.type != "wolf":
+			Console.add_message(type + " is eating " + area.type)
+			area.die()
 	#area.queue_free()
 
 

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://oc6sknnwx1sj"]
+
+[node name="Mission" type="RichTextLabel"]
+text = "10 greetings"
+fit_content = true

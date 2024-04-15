@@ -22,7 +22,11 @@ func show_popup(creature):
 	creature_popup.visible = true
 	creature_popup.global_position = creature.global_position + Vector2(creature.size.x / 2, 0)
 	creature_popup.global_position = creature_popup.global_position.clamp(Vector2.ZERO, screen_size - Vector2(128, 355))
-	$CanvasLayer/CreaturePopUp/VBoxContainer/CurrentType.text = "[center]" + creature.type
+	if creature.type == "???":
+		$CanvasLayer/CreaturePopUp/VBoxContainer/CurrentType.text = "[center]" + creature.type
+		creature_popup.add_creature_type(creature.original_type)
+	else:
+		$CanvasLayer/CreaturePopUp/VBoxContainer/CurrentType.text = "[center]" + creature.type
 	creature_popup.current_creature = creature
 
 

@@ -7,7 +7,7 @@ var passenger = null
 
 
 func _physics_process(delta):
-	if should_move and can_move:
+	if should_move and can_move and is_active:
 		passenger.position = $RidingPos.global_position
 		position = position.lerp(new_pos, delta * 2)
 		if position.distance_to(new_pos) < size.x / 2:
@@ -23,7 +23,7 @@ func _physics_process(delta):
 
 
 func move(_passenger):
-	if !should_move:
+	if !should_move and is_active:
 		passenger = _passenger
 		passenger.can_move = false
 		passenger.position = $RidingPos.global_position

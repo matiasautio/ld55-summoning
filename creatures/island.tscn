@@ -27,20 +27,19 @@ animations = [{
 "texture": ExtResource("3_vbo3u")
 }],
 "loop": true,
-"name": &"island",
+"name": &"water",
 "speed": 3.0
 }]
 
 [node name="Island" type="Area2D"]
 script = ExtResource("1_2nvkt")
-type = "island"
+type = "water"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(12.0001, 3.00002)
 scale = Vector2(0.35, 0.35)
 sprite_frames = SubResource("SpriteFrames_iocnv")
-animation = &"island"
-autoplay = "island"
+animation = &"water"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(-773, -172)

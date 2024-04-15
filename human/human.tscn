@@ -169,8 +169,7 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"human_getwet"
-frame_progress = 0.957753
+animation = &"human"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

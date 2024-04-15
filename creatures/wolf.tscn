@@ -30,12 +30,12 @@ size = Vector2(96, 60)
 y_sort_enabled = true
 script = ExtResource("1_c1xy4")
 type = "wolf"
+can_move = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_a6o6n")
 animation = &"wolf"
-autoplay = "wolf"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_j5ewf")

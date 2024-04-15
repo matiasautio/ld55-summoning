@@ -14,6 +14,7 @@ var state = 1
 var size = Vector2(0,0)
 
 # logic
+@export var is_active = false
 var possible_actions = []
 var possible_action_types = []
 var can_have_action = true
@@ -44,16 +45,22 @@ func _ready():
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture("human", 0).get_size() * $AnimatedSprite2D.scale)
 	screen_size = get_viewport_rect().size
 	find_new_pos()
-	if state == 1:
-		play_animation("human")
+	#if state == 1:
+		#play_animation("human")
 	initial_speed = speed
 	if condition == 1:
 		make_stuck()
+	type = "???"
+
+
+func activate_creature():
+	is_active = true
+	play_animation(original_type)
 
 
 func _physics_process(delta):
 	#t += delta * 0.4
-	if can_move:
+	if can_move and is_active:
 		var move_to = null
 		if goal != null:
 			move_to = goal
@@ -91,28 +98,29 @@ func _physics_process(delta):
 
 
 func _on_vision_area_entered(area):
-	if area != self:
-		# Human is not a ghost
-		if state != 2:
-			if area.type == "wolf" and current_action != "wolf" and current_action != "taxi":
-				perform_action(area)
-			else:
-				if condition == 2 and area.type == "fire" and current_action != "fire":
+	if is_active:
+		if area != self:
+			# Human is not a ghost
+			if state != 2:
+				if area.type == "wolf" and current_action != "wolf" and current_action != "taxi":
 					perform_action(area)
 				else:
-					if area.type == "egg" and can_have_action:
+					if condition == 2 and area.type == "fire" and current_action != "fire":
 						perform_action(area)
 					else:
+						if area.type == "egg" and can_have_action:
+							perform_action(area)
+						else:
+							if THINGS.has(area.type) and can_have_action:
+								add_action_to_list(area)
+			# Human is a ghost
+			else:
+				if area.type == "time machine":
+					perform_action(area)
+				else:
+					if area.type != "egg" and area.type != "fire":
 						if THINGS.has(area.type) and can_have_action:
 							add_action_to_list(area)
-		# Human is a ghost
-		else:
-			if area.type == "time machine":
-				perform_action(area)
-			else:
-				if area.type != "egg" and area.type != "fire":
-					if THINGS.has(area.type) and can_have_action:
-						add_action_to_list(area)
 
 
 func add_action_to_list(action):
@@ -231,13 +239,14 @@ func enable_move():
 
 
 func find_new_pos():
-	direction = 1
-	if state == 1:
-		play_animation("human")
-	var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 1
-	idle_pos = position + movement_area
-	idle_pos = idle_pos.clamp(clamp_start, screen_size)
-	next_pos.global_position = idle_pos
+	if is_active:
+		direction = 1
+		if state == 1:
+			play_animation("human")
+		var movement_area = Vector2(randf_range(-size.x, size.x), randf_range(-size.y, size.y)) * 1
+		idle_pos = position + movement_area
+		idle_pos = idle_pos.clamp(clamp_start, screen_size)
+		next_pos.global_position = idle_pos
 
 
 func _on_action_cooldown_timeout():
@@ -326,7 +335,7 @@ func make_stuck():
 
 
 func _on_water_detector_area_entered(area):
-	if area.type == "island":
+	if area.type == "water":
 		if condition == 0 or condition == 2:
 			goal = null
 			current_action = null

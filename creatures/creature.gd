@@ -5,7 +5,8 @@ class_name Creature
 @export var type = "taxi"
 var original_type = ""
 var size = Vector2(0,0)
-var can_move = true
+@export var is_active = false
+@export var can_move = true
 var screen_size
 var clamp_start = Vector2(250, 64)#Vector2.ZERO
 
@@ -14,6 +15,7 @@ func _ready():
 	original_type = type
 	screen_size = get_viewport_rect().size
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture(type, 0).get_size() * $AnimatedSprite2D.scale)
+	type = "???"
 
 
 func _on_input_event(viewport, event, shape_idx):
@@ -32,8 +34,13 @@ func change_type(new_type):
 
 func enable_move():
 	can_move = true
+	
 
-
+func activate_creature():
+	is_active = true
+	play_animation(original_type)
+	
+	
 func die():
 	pass
 func devolve():

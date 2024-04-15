@@ -23,6 +23,7 @@ size = Vector2(51.5, 44)
 [node name="Taxi" type="Area2D"]
 y_sort_enabled = true
 script = ExtResource("1_tcwuf")
+can_move = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
