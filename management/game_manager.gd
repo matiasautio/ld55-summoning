@@ -7,7 +7,7 @@ extends Node
 var mission_list_0 = ["8 greetings", "Feed a wolf", "Ghost town"]
 var mission_list_1 = ["Return to EGG", "Halloween is over"]
 var mission_list_2 = ["8 sleepers", "All modes of transport"]
-#var mission_list_2 = ["8 sleepers", "All modes of transport"]
+var mission_list_3 = []
 var active_missions = []
 # Mission tracking variables
 var greeting_threshold = 8
