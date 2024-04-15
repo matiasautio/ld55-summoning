@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://efkcyx5sr8of"]
+
+[ext_resource type="Texture2D" uid="uid://oafygj5vcdk1" path="res://art/hole.png" id="1_5j4nq"]
+[ext_resource type="Script" path="res://creatures/hole.gd" id="1_g88w6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h1g1b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5j4nq")
+}],
+"loop": true,
+"name": &"hole",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_780gi"]
+radius = 18.0
+height = 56.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4qxi0"]
+radius = 7.07107
+
+[node name="Hole" type="Area2D"]
+script = ExtResource("1_g88w6")
+type = "hole"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_h1g1b")
+animation = &"hole"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_780gi")
+
+[node name="TeleportArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TeleportArea"]
+shape = SubResource("CircleShape2D_4qxi0")
+
+[node name="TeleportCooldown" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="area_entered" from="TeleportArea" to="." method="_on_teleport_area_area_entered"]
+[connection signal="timeout" from="TeleportCooldown" to="." method="_on_teleport_cooldown_timeout"]

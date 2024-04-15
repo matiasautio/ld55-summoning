@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://e4nhl08v1nco"]
+[gd_scene load_steps=10 format=3 uid="uid://e4nhl08v1nco"]
 
 [ext_resource type="Texture2D" uid="uid://bjak21iq03kak" path="res://art/map_temp.jpeg" id="1_34hbh"]
 [ext_resource type="PackedScene" uid="uid://x7pch5eqnnqv" path="res://human/human.tscn" id="2_wrmqw"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b0cfd4esiayn6" path="res://creatures/timemachine.tscn" id="5_mwrc3"]
 [ext_resource type="PackedScene" uid="uid://cj1w5yk8rehdm" path="res://creatures/island.tscn" id="6_2b36r"]
 [ext_resource type="PackedScene" uid="uid://dlvf1q6udyu5u" path="res://creatures/fire.tscn" id="7_01f77"]
+[ext_resource type="PackedScene" uid="uid://efkcyx5sr8of" path="res://creatures/hole.tscn" id="8_7wnrc"]
+[ext_resource type="PackedScene" uid="uid://bkmakvxqtk3j2" path="res://creatures/donut.tscn" id="9_7te0v"]
 
 [node name="TestLevel" type="Node2D"]
 
@@ -35,25 +37,33 @@ offset_bottom = 644.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
+[node name="Hole" parent="." node_paths=PackedStringArray("hole_buddy") instance=ExtResource("8_7wnrc")]
+position = Vector2(414, 554)
+hole_buddy = NodePath("../Hole2")
+
+[node name="Hole2" parent="." node_paths=PackedStringArray("hole_buddy") instance=ExtResource("8_7wnrc")]
+position = Vector2(1017, 281)
+hole_buddy = NodePath("../Hole")
+
 [node name="Island" parent="." instance=ExtResource("6_2b36r")]
-position = Vector2(930, 251)
+position = Vector2(890, 131)
 
 [node name="Wolf" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("3_aq4in")]
 position = Vector2(641, 276)
 movement_boudnaries = NodePath("../MovementArea")
 
 [node name="Taxi" parent="." instance=ExtResource("4_rdkwh")]
-position = Vector2(385, 92)
+position = Vector2(323, 388)
 
 [node name="timemachine" parent="." instance=ExtResource("5_mwrc3")]
-position = Vector2(444, 393)
+position = Vector2(460, 206)
 
 [node name="Fire" parent="." instance=ExtResource("7_01f77")]
-position = Vector2(893, 494)
+y_sort_enabled = true
+position = Vector2(899, 475)
 
 [node name="Human4" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("2_wrmqw")]
-position = Vector2(1007, 260)
-condition = 1
+position = Vector2(851, 266)
 movement_boudnaries = NodePath("../IslandStuckZone")
 
 [node name="Human" parent="." instance=ExtResource("2_wrmqw")]
@@ -66,7 +76,7 @@ position = Vector2(203, 283)
 position = Vector2(341, 538)
 
 [node name="Human5" parent="." instance=ExtResource("2_wrmqw")]
-position = Vector2(1026, 112)
+position = Vector2(1078, 287)
 
 [node name="Human6" parent="." instance=ExtResource("2_wrmqw")]
 position = Vector2(661, 541)
@@ -75,12 +85,15 @@ position = Vector2(661, 541)
 position = Vector2(1064, 554)
 
 [node name="Human8" parent="." instance=ExtResource("2_wrmqw")]
-position = Vector2(683, 108)
+position = Vector2(654, 108)
 
 [node name="IslandStuckZone" type="ColorRect" parent="."]
-offset_left = 866.0
-offset_top = 245.0
-offset_right = 1050.0
-offset_bottom = 266.0
+offset_left = 822.0
+offset_top = 134.0
+offset_right = 1006.0
+offset_bottom = 155.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="Donut" parent="." instance=ExtResource("9_7te0v")]
+position = Vector2(972, 142)

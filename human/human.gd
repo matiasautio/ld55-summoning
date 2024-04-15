@@ -6,7 +6,8 @@ extends Area2D
 # keep it in balance or plunge it into chaos
 
 @export var type = "human"
-const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale"]
+var original_type = "human"
+const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale", "donut"]
 # island is being checked by the water detector
 # 0 = egg, 1 = human, 2 = ghost
 var state = 1
@@ -68,18 +69,22 @@ func _physics_process(delta):
 			velocity = direction_to_target
 			if global_transform.origin.distance_to(move_to.global_position) < move_to.size.x:
 				goal_reached()
+				velocity = Vector2.ZERO
 			if velocity.length() > 0:
 				velocity = velocity.normalized() * speed
 				if state == 1:
 					play_animation("human_walk")
 			else:
 				if state == 1:
+					if current_action == "fire":
+						return
 					play_animation("human")
 			position += velocity * delta
-		else:
+		#else:
+			#if current_action == null:
 			#_on_action_timeout()
-			print("move to is null")
-			print("current action is ", current_action)
+				#print("move to is null")
+				#print("current action is ", current_action)
 	position = position.clamp(Vector2(313,64), screen_size)
 	if condition == 1:
 		position = position.clamp(Vector2(movement_area.position.x, movement_area.position.y), Vector2(movement_area.end.x, movement_area.end.y))
@@ -89,20 +94,23 @@ func _on_vision_area_entered(area):
 	if area != self:
 		# Human is not a ghost
 		if state != 2:
-			if area.type == "wolf":
+			if area.type == "wolf" and current_action != "wolf" and current_action != "taxi":
 				perform_action(area)
 			else:
-				if condition == 2 and area.type == "fire":
+				if condition == 2 and area.type == "fire" and current_action != "fire":
 					perform_action(area)
 				else:
-					if THINGS.has(area.type) and can_have_action:
-						add_action_to_list(area)
+					if area.type == "egg" and can_have_action:
+						perform_action(area)
+					else:
+						if THINGS.has(area.type) and can_have_action:
+							add_action_to_list(area)
 		# Human is a ghost
 		else:
 			if area.type == "time machine":
 				perform_action(area)
 			else:
-				if area.type != "egg":
+				if area.type != "egg" and area.type != "fire":
 					if THINGS.has(area.type) and can_have_action:
 						add_action_to_list(area)
 
@@ -139,46 +147,57 @@ func perform_action(action):
 				goal = action
 			else:
 				action_timer.start()
-				Console.add_message(type + " is greeting human")
+				play_animation("human")
+				Console.add_message(type + " is greeting " + action.original_type)
 		"wolf":
 			action_timer.start()
 			direction = -1
 			speed = 150
 			goal = action
-			Console.add_message(type + " is afraid of wolf")
+			Console.add_message(type + " is afraid of " + action.original_type)
 		"taxi":
 			if !has_reached_goal:
 				goal = action
 			else:
-				if goal.has_method("move"):
+				#if goal.has_method("move"):
+				if goal != null:
 					goal.move(self)
+				play_animation("human")
 				action_timer.start()
-				Console.add_message(type + " is riding a taxi")
+				Console.add_message(type + " is riding " + action.original_type)
 		"time machine":
 			if !has_reached_goal:
 				goal = action
 			else:
 				action_timer.start()
 				Console.add_message(type + " is time traveling")
-				goal.play_animation("time machine")
-				devolve()
+				play_animation("human")
+				#if goal != null:
+					#goal.play_animation("time machine")
+				#devolve()
 		"egg":
 			if !has_reached_goal:
 				goal = action
 			else:
 				action_timer.start()
-				Console.add_message(type + " is breaking an egg")
+				Console.add_message(type + " is breaking " + action.original_type)
 				play_animation("human_hit")
 				goal.evolve()
 		"fire":
 			if !has_reached_goal:
 				goal = action
 			else:
-				Console.add_message(type + " is performing a dance")
+				Console.add_message(type + " is feeling sleepy")
+				goal = null
+				play_animation("human_sleep")
 				action_timer.start()
-				dance()
+				#dance()
 		"whale":
-			Console.add_message(type + " is looking at whale")
+			Console.add_message(type + " is looking at " + action.original_type)
+			play_animation("human")
+			action_timer.start()
+		"ghost":
+			Console.add_message(type + " is sad about wolf")
 			action_timer.start()
 
 
@@ -222,14 +241,18 @@ func find_new_pos():
 
 
 func _on_action_cooldown_timeout():
+	pass
 	#$Vision.monitoring = true
-	can_have_action = true
+	#can_have_action = true
 
 
 func _on_action_timeout():
+	can_have_action = true
 	if state == 1:
 		play_animation("human")
-	goal = null
+	#else:
+		#print("i am not human")
+	#goal = null
 	has_reached_goal = false
 	current_action = null
 	direction = 1
@@ -264,6 +287,7 @@ func evolve():
 	if state == 0:
 		state = 1
 		play_animation("egg_break")
+		change_type("human")
 		#enable_move()
 
 
@@ -273,6 +297,8 @@ func dance():
 
 
 func play_animation(animation_name):
+	if animation_name == "human" and state != 1:
+		return
 	$AnimatedSprite2D.animation = animation_name
 	$AnimatedSprite2D.play()
 
@@ -301,11 +327,16 @@ func make_stuck():
 
 func _on_water_detector_area_entered(area):
 	if area.type == "island":
-		if condition == 0:
+		if condition == 0 or condition == 2:
+			goal = null
+			current_action = null
 			condition = 2
+			direction = -1
+			find_new_pos()
 			Console.add_message(type + " is getting wet")
-		#can_move = false
+	if area.type == "hole":
 		direction = -1
+		Console.add_message(type + " is avoiding " + area.original_type)
 
 
 func _on_dance_timeout():

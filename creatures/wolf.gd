@@ -9,6 +9,7 @@ var speed = 150
 
 
 func _ready():
+	original_type = "wolf"
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture(type, 0).get_size() * $AnimatedSprite2D.scale)
 	movement_area = movement_boudnaries.get_rect()#global_position - $MovementArea.size
 	print(movement_area)

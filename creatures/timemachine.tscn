@@ -38,7 +38,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ehio4"]
-size = Vector2(80, 120)
+size = Vector2(42, 52)
 
 [node name="timemachine" type="Area2D"]
 y_sort_enabled = true
@@ -51,7 +51,8 @@ sprite_frames = SubResource("SpriteFrames_lpaet")
 animation = &"time machine"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_ehio4")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]
