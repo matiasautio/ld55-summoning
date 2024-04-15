@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://e4nhl08v1nco"]
+[gd_scene load_steps=11 format=3 uid="uid://e4nhl08v1nco"]
 
+[ext_resource type="Script" path="res://levels/level.gd" id="1_mgdq8"]
 [ext_resource type="Texture2D" uid="uid://ccfiemt77mbhj" path="res://art/map.png" id="1_s3js6"]
 [ext_resource type="PackedScene" path="res://creatures/hole.tscn" id="2_climt"]
 [ext_resource type="PackedScene" uid="uid://cj1w5yk8rehdm" path="res://creatures/island.tscn" id="3_udy1f"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://hk20bqlyos8r" path="res://creatures/donut.tscn" id="9_t12an"]
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_mgdq8")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -3.0
@@ -40,29 +42,41 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Hole" parent="." node_paths=PackedStringArray("hole_buddy") instance=ExtResource("2_climt")]
+visible = false
 position = Vector2(414, 554)
 hole_buddy = NodePath("../Hole2")
 
 [node name="Hole2" parent="." node_paths=PackedStringArray("hole_buddy") instance=ExtResource("2_climt")]
+visible = false
 position = Vector2(1017, 281)
 hole_buddy = NodePath("../Hole")
 
 [node name="Island" parent="." instance=ExtResource("3_udy1f")]
+visible = false
 position = Vector2(890, 131)
+
+[node name="Whale" parent="Island" index="2"]
+visible = false
+
+[node name="Taxi" parent="." instance=ExtResource("5_kmsdb")]
+visible = false
+position = Vector2(323, 388)
+
+[node name="Fire" parent="." instance=ExtResource("7_xe4p2")]
+visible = false
+y_sort_enabled = true
+position = Vector2(899, 475)
+
+[node name="timemachine" parent="." instance=ExtResource("6_8p3b2")]
+visible = false
+position = Vector2(460, 206)
 
 [node name="Wolf" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("4_epomb")]
 position = Vector2(641, 276)
 movement_boudnaries = NodePath("../MovementArea")
 
-[node name="Taxi" parent="." instance=ExtResource("5_kmsdb")]
-position = Vector2(323, 388)
-
-[node name="timemachine" parent="." instance=ExtResource("6_8p3b2")]
-position = Vector2(460, 206)
-
-[node name="Fire" parent="." instance=ExtResource("7_xe4p2")]
-y_sort_enabled = true
-position = Vector2(899, 475)
+[node name="Donut" parent="." instance=ExtResource("9_t12an")]
+position = Vector2(972, 142)
 
 [node name="Human4" parent="." node_paths=PackedStringArray("movement_boudnaries") instance=ExtResource("8_8ffpm")]
 position = Vector2(851, 266)
@@ -97,5 +111,4 @@ offset_bottom = 155.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Donut" parent="." instance=ExtResource("9_t12an")]
-position = Vector2(972, 142)
+[editable path="Island"]

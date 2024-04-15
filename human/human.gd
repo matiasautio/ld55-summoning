@@ -210,7 +210,7 @@ func perform_action(action):
 				goal = null
 				if state == 1:
 					play_animation("human_sleep")
-					Console.game_manager.sleep(1)
+					Console.game_manager.sleep(-1)
 				action_timer.start()
 				#dance()
 		"whale":
@@ -218,7 +218,7 @@ func perform_action(action):
 			play_animation("human")
 			action_timer.start()
 		"ghost":
-			Console.add_message(humanity_type + " is sad about wolf")
+			Console.add_message(humanity_type + " is sad about " + action.original_type)
 			action_timer.start()
 		"donut":
 			if !has_reached_goal:
@@ -288,12 +288,7 @@ func _on_action_timeout():
 	can_have_action = true
 	if state == 1:
 		play_animation("human")
-	#else:
-		#print("i am not human")
-	#goal = null
 	has_reached_goal = false
-	#if current_action == "fire":
-		#Console.game_manager.sleep(-1)
 	current_action = null
 	direction = 1
 	speed = initial_speed
@@ -392,7 +387,7 @@ func _on_dance_timeout():
 
 
 func play_audio(audio):
-	if !audio_player.is_playing:
+	if !audio_player.playing:
 		audio_player.stream = AudioManager.get_audio(audio)
 		audio_player.play()
 
