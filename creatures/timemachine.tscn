@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0cfd4esiayn6"]
+[gd_scene load_steps=9 format=3 uid="uid://b0cfd4esiayn6"]
 
 [ext_resource type="Texture2D" uid="uid://d0b4q2meatuq4" path="res://art/timemachine_1.png" id="1_jq5ei"]
 [ext_resource type="Script" path="res://creatures/timemachine.gd" id="1_ofbcr"]
 [ext_resource type="Texture2D" uid="uid://ds02fpq6pbxyl" path="res://art/timemachine_4.png" id="2_7sf3a"]
 [ext_resource type="Texture2D" uid="uid://dtsnsdhh0truv" path="res://art/timemachine_3.png" id="3_kmkxb"]
+[ext_resource type="Texture2D" uid="uid://deu6alsqykjn7" path="res://art/timemachine_1b.png" id="3_u1kdq"]
 [ext_resource type="Texture2D" uid="uid://c24oj1ujppok3" path="res://art/timemachine_2.png" id="4_0rsvn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lpaet"]
@@ -20,6 +21,9 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_jq5ei")
 }, {
+"duration": 2.3,
+"texture": ExtResource("3_u1kdq")
+}, {
 "duration": 1.0,
 "texture": ExtResource("2_7sf3a")
 }, {
@@ -28,6 +32,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("4_0rsvn")
+}, {
+"duration": 1.5,
+"texture": ExtResource("1_jq5ei")
+}, {
+"duration": 1.8,
+"texture": ExtResource("3_u1kdq")
 }, {
 "duration": 1.0,
 "texture": ExtResource("1_jq5ei")
@@ -49,6 +59,8 @@ type = "time machine"
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_lpaet")
 animation = &"time machine"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
