@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://ui/CreaturePopUp.gd" id="2_nfrai"]
 [ext_resource type="FontFile" uid="uid://0rli1k7ann8i" path="res://ui/FoundersGroteskMono-Medium.otf" id="3_jmbk8"]
 [ext_resource type="Texture2D" uid="uid://c5dhqafc7nvo2" path="res://art/UI_menu_settingsbutton.png" id="4_2481w"]
-[ext_resource type="PackedScene" uid="uid://ble10xrxtkvux" path="res://ui/type_button.tscn" id="4_xhbyc"]
+[ext_resource type="PackedScene" uid="uid://dbai5uboeil20" path="res://ui/type_button.tscn" id="4_xhbyc"]
 [ext_resource type="PackedScene" uid="uid://bk20btpp2rce0" path="res://management/game_manager.tscn" id="7_pimv1"]
 [ext_resource type="PackedScene" uid="uid://oc6sknnwx1sj" path="res://ui/mission_text.tscn" id="8_3oju2"]
 
@@ -162,7 +162,7 @@ button_scene = ExtResource("4_xhbyc")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/CreaturePopUp"]
 layout_mode = 2
-color = Color(0.137255, 0.137255, 0.156863, 1)
+color = Color(0.188235, 0.188235, 0.211765, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CreaturePopUp"]
 layout_mode = 2
@@ -170,7 +170,7 @@ layout_mode = 2
 [node name="Header" type="RichTextLabel" parent="CanvasLayer/CreaturePopUp/VBoxContainer"]
 visible = false
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/normal_font_size = 11
 bbcode_enabled = true
 text = "[center]Creature type"
 fit_content = true

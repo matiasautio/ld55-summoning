@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://crqij01saa7nu" path="res://art/title_8.png" id="15_ryuby"]
 [ext_resource type="Texture2D" uid="uid://dghla5eximyjd" path="res://art/title_1.png" id="17_vcojh"]
 [ext_resource type="Texture2D" uid="uid://cujlgxv36sarr" path="res://art/title_9.png" id="17_xw3p8"]
-[ext_resource type="PackedScene" uid="uid://cc5brkt0kehvs" path="res://ui/credits.tscn" id="19_f0m43"]
+[ext_resource type="PackedScene" uid="uid://bcn3ruxd04xt6" path="res://ui/credits.tscn" id="19_f0m43"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lbsfs"]
 animations = [{

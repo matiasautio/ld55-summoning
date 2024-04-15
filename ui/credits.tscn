@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cc5brkt0kehvs"]
+[gd_scene load_steps=13 format=3 uid="uid://bcn3ruxd04xt6"]
 
 [ext_resource type="Script" path="res://ui/credits.gd" id="1_5d8ap"]
 [ext_resource type="FontFile" uid="uid://0rli1k7ann8i" path="res://ui/FoundersGroteskMono-Medium.otf" id="1_pekmm"]
