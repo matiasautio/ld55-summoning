@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=31 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
 [ext_resource type="Texture2D" uid="uid://cw1mc0dbabatv" path="res://art/egg.png" id="2_ew4f7"]
@@ -22,6 +22,9 @@
 [ext_resource type="Texture2D" uid="uid://c44rs122eo6xn" path="res://art/human1_eat_1.png" id="9_l7cq7"]
 [ext_resource type="Texture2D" uid="uid://bkqjaw16mrm1" path="res://art/human1_eat_2.png" id="10_6cmsi"]
 [ext_resource type="Texture2D" uid="uid://c14arxh2piix5" path="res://art/human1_eat_3.png" id="11_03ywn"]
+[ext_resource type="Texture2D" uid="uid://cqqegoex1ce7k" path="res://art/human_getwet_3.png" id="17_yjenq"]
+[ext_resource type="Texture2D" uid="uid://dge47knc0oabi" path="res://art/human_getwet_2.png" id="18_s8wfw"]
+[ext_resource type="Texture2D" uid="uid://cyagd6vwed2uy" path="res://art/human_getwet_1.png" id="19_xt1ed"]
 [ext_resource type="Script" path="res://human/NextPos.gd" id="23_pudja"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cc41q"]
@@ -102,6 +105,20 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.6,
+"texture": ExtResource("19_xt1ed")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_s8wfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_yjenq")
+}],
+"loop": true,
+"name": &"human_getwet",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_4lgu2")
 }, {
@@ -152,7 +169,8 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"human"
+animation = &"human_getwet"
+frame_progress = 0.957753
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
