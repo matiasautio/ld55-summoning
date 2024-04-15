@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://x7pch5eqnnqv"]
+[gd_scene load_steps=33 format=3 uid="uid://x7pch5eqnnqv"]
 
 [ext_resource type="Script" path="res://human/human.gd" id="1_wbjps"]
 [ext_resource type="Texture2D" uid="uid://cw1mc0dbabatv" path="res://art/egg.png" id="2_ew4f7"]
@@ -26,6 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://dge47knc0oabi" path="res://art/human_getwet_2.png" id="18_s8wfw"]
 [ext_resource type="Texture2D" uid="uid://cyagd6vwed2uy" path="res://art/human_getwet_1.png" id="19_xt1ed"]
 [ext_resource type="Script" path="res://human/NextPos.gd" id="23_pudja"]
+[ext_resource type="Texture2D" uid="uid://c0iuayai61m68" path="res://art/human1_socialize_2.png" id="24_5cbo4"]
+[ext_resource type="Texture2D" uid="uid://cbmjoat163pjj" path="res://art/human1_socialize_3.png" id="25_biqe2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cc41q"]
 animations = [{
@@ -142,6 +144,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("24_5cbo4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_biqe2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_5cbo4")
+}],
+"loop": true,
+"name": &"human_socialize",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("5_8vckj")
 }, {
 "duration": 1.0,
@@ -169,7 +185,8 @@ script = ExtResource("1_wbjps")
 position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
-animation = &"human"
+animation = &"human_socialize"
+frame_progress = 0.657317
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
