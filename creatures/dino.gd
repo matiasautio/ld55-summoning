@@ -40,12 +40,13 @@ func find_new_pos():
 
 
 func _on_vision_area_area_entered(area):
-	if area.type == "egg":
-		idle_pos = area.global_position
-	elif area.type == "fire":
-		direction = -1
-		$Scared.start()
-		Console.add_message(type + " is afraid of " + area.original_type)
+	if is_active:
+		if area.type == "egg":
+			idle_pos = area.global_position
+		elif area.type == "fire":
+			direction = -1
+			$Scared.start()
+			Console.add_message(type + " is afraid of " + area.original_type)
 
 
 func _on_scared_timeout():
