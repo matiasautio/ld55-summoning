@@ -44,7 +44,7 @@ func _physics_process(delta):
 
 
 func _on_area_entered(area):
-	if is_active:
+	if area != self and is_active:
 		if area.type != "ghost" and area.type != "???" and area.type != "wolf":
 			var victim_type = area.type
 			if area.die():

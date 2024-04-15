@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cie1ngtth5l1q"]
+[gd_scene load_steps=8 format=3 uid="uid://cie1ngtth5l1q"]
 
 [ext_resource type="Texture2D" uid="uid://vrtnw2nqc8sr" path="res://art/dino_1.png" id="1_7ww35"]
 [ext_resource type="Script" path="res://creatures/dino.gd" id="1_gav0y"]
@@ -26,7 +26,11 @@ animations = [{
 radius = 95.025
 height = 326.004
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_uocfe"]
+radius = 55.0091
+
 [node name="dino" type="Area2D"]
+y_sort_enabled = true
 script = ExtResource("1_gav0y")
 type = "dino"
 
@@ -41,3 +45,18 @@ position = Vector2(-3.75, 23.75)
 rotation = -1.56093
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CapsuleShape2D_buv8l")
+
+[node name="VisionArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VisionArea"]
+position = Vector2(42, -42)
+shape = SubResource("CircleShape2D_uocfe")
+
+[node name="Scared" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="area_entered" from="VisionArea" to="." method="_on_vision_area_area_entered"]
+[connection signal="timeout" from="Scared" to="." method="_on_scared_timeout"]

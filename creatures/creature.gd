@@ -18,6 +18,11 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture(type, 0).get_size() * $AnimatedSprite2D.scale)
 	type = "???"
+	other_init()
+
+
+func other_init():
+	pass
 
 
 func _on_input_event(viewport, event, shape_idx):

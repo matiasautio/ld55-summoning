@@ -3,7 +3,7 @@ extends Node2D
 @onready var tier_1_creatures = [$timemachine]
 @onready var tier_2_creatures = [$Taxi, $Hole, $Hole2]
 @onready var tier_3_creatures = [$Fire, $Island]
-@onready var tier_4_creatures = [$Island/Whale]
+@onready var tier_4_creatures = [$Island/Whale, $dino]
 
 func _ready():
 	Console.game_manager.level = self
