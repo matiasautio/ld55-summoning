@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bf7866m106fnr"]
+[gd_scene load_steps=21 format=3 uid="uid://bf7866m106fnr"]
 
 [ext_resource type="Script" path="res://creatures/startpage.gd" id="1_gmh82"]
 [ext_resource type="Texture2D" uid="uid://c1p1hij1vhkvl" path="res://art/new_logo_1.png" id="1_tkbx0"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://ddk38m8jgv6x0" path="res://art/title_7.png" id="14_3pgw2"]
 [ext_resource type="Texture2D" uid="uid://cfxed3gr64wlt" path="res://art/title_6.png" id="14_wat27"]
 [ext_resource type="Texture2D" uid="uid://crqij01saa7nu" path="res://art/title_8.png" id="15_ryuby"]
+[ext_resource type="Texture2D" uid="uid://dghla5eximyjd" path="res://art/title_1.png" id="17_vcojh"]
+[ext_resource type="Texture2D" uid="uid://cujlgxv36sarr" path="res://art/title_9.png" id="17_xw3p8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lbsfs"]
 animations = [{
@@ -68,9 +70,6 @@ animations = [{
 "texture": ExtResource("11_qhlkg")
 }, {
 "duration": 1.0,
-"texture": ExtResource("12_8aqvk")
-}, {
-"duration": 1.0,
 "texture": ExtResource("13_yunu1")
 }, {
 "duration": 1.0,
@@ -80,11 +79,20 @@ animations = [{
 "texture": ExtResource("14_3pgw2")
 }, {
 "duration": 1.0,
+"texture": ExtResource("12_8aqvk")
+}, {
+"duration": 1.0,
 "texture": ExtResource("15_ryuby")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_xw3p8")
+}, {
+"duration": 4.0,
+"texture": ExtResource("17_vcojh")
 }],
 "loop": true,
 "name": &"title",
-"speed": 5.0
+"speed": 1.0
 }]
 
 [node name="startpage" type="CanvasLayer"]
@@ -171,7 +179,6 @@ scale = Vector2(1.28333, 1.28333)
 sprite_frames = SubResource("SpriteFrames_l41e3")
 animation = &"title"
 autoplay = "title"
-frame = 5
-frame_progress = 0.887152
+frame_progress = 0.755516
 
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
