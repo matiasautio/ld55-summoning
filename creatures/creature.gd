@@ -42,7 +42,7 @@ func activate_creature():
 	
 	
 func die():
-	pass
+	return false
 func devolve():
 	pass
 func evolve():

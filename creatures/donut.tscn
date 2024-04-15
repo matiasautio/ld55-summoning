@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkmakvxqtk3j2"]
+[gd_scene load_steps=5 format=3 uid="uid://hk20bqlyos8r"]
 
 [ext_resource type="Script" path="res://creatures/donut.gd" id="1_30mk8"]
 [ext_resource type="Texture2D" uid="uid://dx34g4ijpawrr" path="res://art/donut.png" id="1_jknhl"]
@@ -30,3 +30,5 @@ animation = &"donut"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_x3s0b")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

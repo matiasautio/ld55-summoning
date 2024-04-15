@@ -34,8 +34,9 @@ func move(_passenger):
 			$AnimatedSprite2D.flip_h = false
 		new_pos = global_position + Vector2(movement, 0)
 		new_pos = new_pos.clamp(clamp_start, screen_size)
-		print(new_pos)
+		#print(new_pos)
 		should_move = true
+		Console.game_manager.transport("taxi")
 
 
 func _on_passenger_seat_area_exited(area):

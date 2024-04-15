@@ -4,10 +4,11 @@ extends Creature
 var can_teleport = true
 
 func _on_teleport_area_area_entered(area):
-	if area != self and can_teleport and is_active:
+	if area != self and can_teleport and is_active:# and hole_buddy.is_active:
 		area.global_position = hole_buddy.global_position
 		start_cooldown()
 		hole_buddy.start_cooldown()
+		Console.game_manager.transport("hole")
 
 
 func start_cooldown():

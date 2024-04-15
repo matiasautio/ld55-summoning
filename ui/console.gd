@@ -4,6 +4,9 @@ extends Control
 var current_creature = null
 var screen_size
 
+# Game Manager
+@onready var game_manager = $GameManager
+
 
 func _ready():
 	screen_size = get_viewport_rect().size

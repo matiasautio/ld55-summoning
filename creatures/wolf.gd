@@ -46,8 +46,12 @@ func _physics_process(delta):
 func _on_area_entered(area):
 	if is_active:
 		if area.type != "ghost" and area.type != "???" and area.type != "wolf":
-			Console.add_message(type + " is eating " + area.type)
-			area.die()
+			var victim_type = area.type
+			if area.die():
+				Console.add_message(original_type + " is eating " + victim_type)
+				Console.game_manager.wolf_eats()
+			else:
+				Console.add_message(original_type + " tries to eat " + area.type)
 	#area.queue_free()
 
 

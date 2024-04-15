@@ -7,7 +7,8 @@ extends Area2D
 
 @export var type = "human"
 var original_type = "human"
-const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale", "donut"]
+var humanity_type = "human"
+const THINGS = ["human", "ghost", "egg", "wolf", "taxi", "time machine", "fire", "whale", "donut", "dino"]
 # island is being checked by the water detector
 # 0 = egg, 1 = human, 2 = ghost
 var state = 1
@@ -102,6 +103,8 @@ func _on_vision_area_entered(area):
 		if area != self:
 			# Human is not a ghost
 			if state != 2:
+				if area.type == "donut" and current_action != "donut":
+					perform_action(area)
 				if area.type == "wolf" and current_action != "wolf" and current_action != "taxi":
 					perform_action(area)
 				else:
@@ -156,13 +159,14 @@ func perform_action(action):
 			else:
 				action_timer.start()
 				play_animation("human")
-				Console.add_message(type + " is greeting " + action.original_type)
+				Console.add_message(humanity_type + " is greeting " + action.original_type)
+				Console.game_manager.greeting()
 		"wolf":
 			action_timer.start()
 			direction = -1
 			speed = 150
 			goal = action
-			Console.add_message(type + " is afraid of " + action.original_type)
+			Console.add_message(humanity_type + " is afraid of " + action.original_type)
 		"taxi":
 			if !has_reached_goal:
 				goal = action
@@ -172,14 +176,16 @@ func perform_action(action):
 					goal.move(self)
 				play_animation("human")
 				action_timer.start()
-				Console.add_message(type + " is riding " + action.original_type)
+				Console.add_message(humanity_type + " is riding " + action.original_type)
+				goal = null
 		"time machine":
 			if !has_reached_goal:
 				goal = action
 			else:
 				action_timer.start()
-				Console.add_message(type + " is time traveling")
+				Console.add_message(humanity_type + " is time traveling")
 				play_animation("human")
+				goal = null
 				#if goal != null:
 					#goal.play_animation("time machine")
 				#devolve()
@@ -188,25 +194,44 @@ func perform_action(action):
 				goal = action
 			else:
 				action_timer.start()
-				Console.add_message(type + " is breaking " + action.original_type)
-				play_animation("human_hit")
+				Console.add_message(humanity_type + " is breaking " + action.original_type)
+				if state == 1:
+					play_animation("human_hit")
 				goal.evolve()
+				goal = null
 		"fire":
 			if !has_reached_goal:
 				goal = action
 			else:
-				Console.add_message(type + " is feeling sleepy")
+				Console.add_message(humanity_type + " is feeling sleepy")
 				goal = null
-				play_animation("human_sleep")
+				if state == 1:
+					play_animation("human_sleep")
+					Console.game_manager.sleep(1)
 				action_timer.start()
 				#dance()
 		"whale":
-			Console.add_message(type + " is looking at " + action.original_type)
+			Console.add_message(humanity_type + " is looking at " + action.original_type)
 			play_animation("human")
 			action_timer.start()
 		"ghost":
-			Console.add_message(type + " is sad about wolf")
+			Console.add_message(humanity_type + " is sad about wolf")
 			action_timer.start()
+		"donut":
+			if !has_reached_goal:
+				goal = action
+			else:
+				#var victim_type = action
+				if action.die():
+					Console.add_message(humanity_type + " is eating " + action.original_type)
+					if type == "wolf":
+						Console.game_manager.wolf_eats()
+				else:
+					Console.add_message(humanity_type + " tries to eat " + action.original_type)
+				goal = null
+				if state == 1:
+					play_animation("human_eat")
+				action_timer.start()
 
 
 func goal_reached():
@@ -229,6 +254,7 @@ func _on_input_event(viewport, event, shape_idx):
 func change_type(new_type):
 	if monitorable:
 		set_deferred("monitorable", false)
+	humanity_type = new_type
 	type = new_type
 	set_deferred("monitorable", true)
 
@@ -263,6 +289,8 @@ func _on_action_timeout():
 		#print("i am not human")
 	#goal = null
 	has_reached_goal = false
+	#if current_action == "fire":
+		#Console.game_manager.sleep(-1)
 	current_action = null
 	direction = 1
 	speed = initial_speed
@@ -276,6 +304,8 @@ func die():
 		change_type("ghost")
 		state = 2
 		play_animation("human_becomeghost")
+		Console.game_manager.ghost(1)
+		return true
 
 
 func devolve():
@@ -286,10 +316,13 @@ func devolve():
 		can_move = false
 		position = Vector2(randf_range(0, screen_size.x), randf_range(0, screen_size.y))
 		position = position.clamp(clamp_start, screen_size)
+		Console.game_manager.into_egg()
 	elif state == 2:
 		change_type("human")
 		state = 1
 		play_animation("human")
+		Console.game_manager.ghost(-1)
+		Console.game_manager.back_to_human()
 
 
 func evolve():

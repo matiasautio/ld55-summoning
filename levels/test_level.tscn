@@ -7,8 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://b0cfd4esiayn6" path="res://creatures/timemachine.tscn" id="5_mwrc3"]
 [ext_resource type="PackedScene" uid="uid://cj1w5yk8rehdm" path="res://creatures/island.tscn" id="6_2b36r"]
 [ext_resource type="PackedScene" uid="uid://dlvf1q6udyu5u" path="res://creatures/fire.tscn" id="7_01f77"]
-[ext_resource type="PackedScene" uid="uid://efkcyx5sr8of" path="res://creatures/hole.tscn" id="8_7wnrc"]
-[ext_resource type="PackedScene" uid="uid://bkmakvxqtk3j2" path="res://creatures/donut.tscn" id="9_7te0v"]
+[ext_resource type="PackedScene" path="res://creatures/hole.tscn" id="8_7wnrc"]
+[ext_resource type="PackedScene" uid="uid://hk20bqlyos8r" path="res://creatures/donut.tscn" id="9_7te0v"]
 
 [node name="TestLevel" type="Node2D"]
 
