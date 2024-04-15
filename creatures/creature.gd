@@ -10,6 +10,8 @@ var size = Vector2(0,0)
 var screen_size
 var clamp_start = Vector2(250, 64)#Vector2.ZERO
 
+# audio
+@export var audio_player : AudioStreamPlayer2D
 
 func _ready():
 	original_type = type
@@ -56,3 +58,8 @@ func play_animation(animation_name):
 	if animations.has(animation_name):
 		$AnimatedSprite2D.animation = animation_name
 		$AnimatedSprite2D.play()
+
+
+func reset():
+	is_active = false
+	type = "???"

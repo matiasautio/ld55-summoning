@@ -57,3 +57,9 @@ func apply_changes_to_creature():
 
 func _on_close_pop_up_delay_timeout():
 	visible = false
+
+
+func _on_reset_pressed():
+	current_creature.reset()
+	$VBoxContainer/CurrentType.text = "[center]" + current_creature.type
+	$ClosePopUpDelay.start()

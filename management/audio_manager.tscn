@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://7co2ak1j4xx5"]
+
+[ext_resource type="Script" path="res://management/audio_manager.gd" id="1_6w6ah"]
+[ext_resource type="AudioStream" uid="uid://cw2s012oyangy" path="res://Sounds/getwet.wav" id="2_ytps3"]
+[ext_resource type="AudioStream" uid="uid://bndtdvoqftqid" path="res://Sounds/Human_dies.wav" id="3_8sx32"]
+[ext_resource type="AudioStream" uid="uid://dku38umsq15t2" path="res://Sounds/timemachine.wav" id="5_ucufx"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_6w6ah")
+wet_sfx = ExtResource("2_ytps3")
+death_sfx = ExtResource("3_8sx32")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ucufx")

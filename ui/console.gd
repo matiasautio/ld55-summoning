@@ -28,6 +28,9 @@ func show_popup(creature):
 	if creature.type == "???":
 		$CanvasLayer/CreaturePopUp/VBoxContainer/CurrentType.text = "[center]" + creature.type
 		creature_popup.add_creature_type(creature.original_type)
+	elif creature.type == "ghost" or creature.type == "egg":
+		$CanvasLayer/CreaturePopUp/VBoxContainer/CurrentType.text = "[center]" + creature.type
+		creature_popup.add_creature_type(creature.type)
 	else:
 		$CanvasLayer/CreaturePopUp/VBoxContainer/CurrentType.text = "[center]" + creature.type
 	creature_popup.current_creature = creature

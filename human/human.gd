@@ -41,6 +41,9 @@ var clamp_start = Vector2(250, 64)#Vector2.ZERO
 @export var movement_boudnaries : ColorRect
 var movement_area
 
+# audio
+@onready var audio_player = $AudioStreamPlayer2D
+
 
 func _ready():
 	size = Vector2($AnimatedSprite2D.sprite_frames.get_frame_texture("human", 0).get_size() * $AnimatedSprite2D.scale)
@@ -75,7 +78,7 @@ func _physics_process(delta):
 			direction_to_target = ((move_to.global_transform.origin - global_transform.origin) * direction).normalized()
 			#print(direction_to_target)
 			velocity = direction_to_target
-			if global_transform.origin.distance_to(move_to.global_position) < move_to.size.x:
+			if global_transform.origin.distance_to(move_to.global_position) < move_to.size.x / 2:
 				goal_reached()
 				velocity = Vector2.ZERO
 			if velocity.length() > 0:
@@ -224,8 +227,8 @@ func perform_action(action):
 				#var victim_type = action
 				if action.die():
 					Console.add_message(humanity_type + " is eating " + action.original_type)
-					if type == "wolf":
-						Console.game_manager.wolf_eats()
+					#if type == "wolf":
+						#Console.game_manager.wolf_eats()
 				else:
 					Console.add_message(humanity_type + " tries to eat " + action.original_type)
 				goal = null
@@ -305,6 +308,7 @@ func die():
 		state = 2
 		play_animation("human_becomeghost")
 		Console.game_manager.ghost(1)
+		play_audio("die")
 		return true
 
 
@@ -330,6 +334,7 @@ func evolve():
 		state = 1
 		play_animation("egg_break")
 		change_type("human")
+		play_audio("hatch")
 		#enable_move()
 
 
@@ -376,6 +381,7 @@ func _on_water_detector_area_entered(area):
 			direction = -1
 			find_new_pos()
 			Console.add_message(type + " is getting wet")
+			play_audio("wet")
 	if area.type == "hole":
 		direction = -1
 		Console.add_message(type + " is avoiding " + area.original_type)
@@ -383,3 +389,14 @@ func _on_water_detector_area_entered(area):
 
 func _on_dance_timeout():
 	pass # Replace with function body.
+
+
+func play_audio(audio):
+	if !audio_player.is_playing:
+		audio_player.stream = AudioManager.get_audio(audio)
+		audio_player.play()
+
+
+func reset():
+	is_active = false
+	type = "???"
