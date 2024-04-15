@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ble10xrxtkvux"]
+[gd_scene format=3 uid="uid://dbai5uboeil20"]
 
 [node name="Type" type="Button"]
 text = "human"

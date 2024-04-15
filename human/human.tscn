@@ -186,7 +186,7 @@ position = Vector2(0.312497, 0.361418)
 scale = Vector2(0.232143, 0.232143)
 sprite_frames = SubResource("SpriteFrames_cc41q")
 animation = &"human_socialize"
-frame_progress = 0.657317
+frame_progress = 0.417174
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

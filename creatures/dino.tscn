@@ -30,7 +30,7 @@ height = 228.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_u6kho")
 animation = &"dino"
-frame_progress = 0.761725
+frame_progress = 0.263699
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D"]
 position = Vector2(-15, 95)
